@@ -1,0 +1,51 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+python-slugify = "==8.0.1"
+pillow = "==10.0.0"
+argon2-cffi = "==21.3.0"
+redis = "==4.6.0"
+hiredis = "==2.2.3"
+django = "==4.2.3"
+django-environ = "==0.10.0"
+django-model-utils = "==4.3.1"
+django-crispy-forms = "==2.0"
+crispy-bootstrap5 = "==0.7"
+django-redis = "==5.3.0"
+djangorestframework = "==3.14.0"
+django-cors-headers = "==4.2.0"
+drf-spectacular = "==0.26.4"
+werkzeug = {version = "==2.3.6", extras = ["watchdog"]}
+ipdb = "==0.13.13"
+psycopg = {version = "==3.1.9", extras = ["binary"]}
+mypy = "==1.4.1"
+django-stubs = "==4.2.3"
+pytest = "==7.4.0"
+pytest-sugar = "==0.9.7"
+djangorestframework-stubs = "==3.14.2"
+sphinx = "==6.2.1"
+sphinx-autobuild = "==2021.3.14"
+flake8 = "==6.0.0"
+flake8-isort = "==6.0.0"
+coverage = "==7.2.7"
+black = "==23.7.0"
+djlint = "==1.32.1"
+pylint-django = "==2.5.3"
+pre-commit = "==3.3.3"
+factory-boy = "==3.3.0"
+django-debug-toolbar = "==4.1.0"
+django-extensions = "==3.2.3"
+django-coverage-plugin = "==3.1.0"
+pytest-django = "==4.5.2"
+daphne = "*"
+channels = "*"
+channels-redis = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"
+python_full_version = "3.11.4"

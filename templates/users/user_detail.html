@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+  User: 
+  
+    {{ user.email }}
+  
+  
+{% endblock title %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h2>
+        
+        <img src={{user.thumbnail_image_url}}>
+        <img src={{user.profile_image_url}}>
+          {{ user.nickname }}
+          {{ user.email }}
+        
+      </h2>
+    </div>
+  </div>
+  {% if user == request.user %}
+    <!-- Action buttons -->
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- Your Stuff: Custom user template urls -->
+      </div>
+    </div>
+    <!-- End Action buttons -->
+  {% endif %}
+</div>
+{% endblock content %}

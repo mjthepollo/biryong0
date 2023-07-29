@@ -1,0 +1,152 @@
+<!-- chat/templates/chat/room.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/chat.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Chat Room</title>
+    <script>
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty("--vh", `${vh}px`);
+        window.addEventListener("resize", () => {
+          let vh = window.innerHeight * 0.01;
+          document.documentElement.style.setProperty("--vh", `${vh}px`);
+        });
+      </script>
+</head>
+<body>
+    <div class="container">
+        <div id="smalltalk-title">Small Talk</div>
+        <div id="user-list"></div>
+        <div id='smalltalks'></div>
+        <div id="smalltalk-input">
+            <input id="chat-message-input" type="text" size="100" placeholder="채팅을 입력해주세요!">
+            <input hidden id="chat-message-submit" type="button" value="Send">
+        </div>
+    </div>
+    {{ room_name|json_script:"room-name" }}
+    {{ user.username|json_script:"user_id" }}
+    <script>
+        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+        const userId = JSON.parse(document.getElementById('user_id').textContent);
+        let lastTalk;
+        const userListRefreshInterval = 3000
+        const smallTalkSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/smalltalk/'
+            + roomName
+            + '/'
+        );
+
+        const interval = setInterval(function ping() {
+            smallTalkSocket.clients.forEach(function each(ws) {
+              if (ws.isAlive === false) return ws.terminate();
+              ws.isAlive = false;
+              ws.ping(()=>{});
+            });
+          }, 30000);
+          
+        const stringToHTML = function (str) {
+            var dom = document.createElement('div');
+            dom.innerHTML = str;
+            return dom;
+        
+        };
+
+        const goToBottom = function(){
+            const boxContainer = document.querySelector('#smalltalks');
+            boxContainer.scrollTop = boxContainer.scrollHeight;
+            let isAtBottom = boxContainer.scrollHeight - boxContainer.scrollTop === boxContainer.clientHeight;
+            if (isAtBottom) {
+                boxContainer.scrollTop = boxContainer.scrollHeight;
+            }
+        }
+
+
+        function userInfoListToHtml(userInfoList) {
+            let html = '';
+            for (let i = 0; i < userInfoList.length; i++) {
+                const thumbnailImageUrl = userInfoList[i].thumbnail_image_url;
+                const nickname = userInfoList[i].nickname;
+                html += `<div class="user-info"><img src="${thumbnailImageUrl}"><span>${nickname}</span></div>`;
+            }
+            return html;
+        }
+
+        function createLine(talk, lastTalk=undefined){
+            const isMine = talk.user_id === userId;
+            let firstTalkOfTalkSet = false;
+            if (!isMine){
+                firstTalkOfTalkSet = lastTalk === undefined ? true : lastTalk.dataset.user_id !== talk.user_id;
+            } 
+            const ownClass = isMine ? 'mine' : 'not-mine';
+            const newTalk = document.createElement('div');
+            newTalk.dataset.user_id = talk.user_id;
+            newTalk.classList.add('chat-line');
+            newTalk.classList.add(ownClass);
+            if (firstTalkOfTalkSet){
+                newTalk.innerHTML = `<div class="user-thumbnail"><img src="${talk.thumbnail_image_url}"></div>
+                                <div class="message-container">
+                                    <span class="nickname">${talk.nickname}</span>
+                                    <p class="message">${talk.message}</p>
+                                </div>`;
+            } else {
+                newTalk.innerHTML= `<div class="empty-thumbnail"></div>
+                                <div class="message-container">
+                                    <p class="message">${talk.message}</p>
+                                </div>`;
+            }
+            return newTalk;
+        }
+
+        smallTalkSocket.onmessage = function(e) {
+            const type = JSON.parse(e.data).type;
+            if (type === 'user_info_list') {
+                const userInfoList = JSON.parse(e.data).user_info_list;
+                document.querySelector('#user-list').innerHTML = userInfoListToHtml(userInfoList);
+            }else if (type === 'talk') {
+                const talk = JSON.parse(e.data).talk;
+                const newTalk = createLine(talk, lastTalk);
+                lastTalk = newTalk;
+                document.querySelector('#smalltalks').appendChild(newTalk);
+                goToBottom();
+            }else if (type === "previous_talks"){
+                const previousTalks = JSON.parse(e.data).previous_talks;
+                for (let i = 0; i < previousTalks.length; i++) {
+                    const newTalk = createLine(previousTalks[i], lastTalk);
+                    lastTalk = newTalk;
+                    document.querySelector('#smalltalks').appendChild(newTalk);
+                }
+                goToBottom();
+            }
+        };
+
+        smallTalkSocket.onclose = function(e) {
+            console.error('채팅이 비정상적으로 종료됐습니다!');
+        };
+
+        document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-input').onkeypress = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#chat-message-submit').click();
+            }
+        };
+
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+            const messageInputDom = document.querySelector('#chat-message-input');
+            const message = messageInputDom.value;
+            smallTalkSocket.send(JSON.stringify({
+                "type":"message",
+                'content': message
+            }));
+            messageInputDom.value = '';
+        };
+    </script>
+</body>
+</html>

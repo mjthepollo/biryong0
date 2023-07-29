@@ -1,0 +1,30 @@
+{
+  "sort-order": [
+    ["z-index", "position", "top", "left", "right", "bottom"],
+    ["display", "flex-direction", "justify-content", "align-items", "overflow"],
+    [
+      "box-sizing",
+      "border-radius",
+      "max-width",
+      "width",
+      "min-width",
+      "max-height",
+      "height",
+      "min-height",
+      "margin",
+      "margin-top",
+      "margin-left",
+      "margin-bottom",
+      "margin-right",
+      "padding",
+      "padding-top",
+      "padding-right",
+      "padding-bottom",
+      "padding-left"
+    ],
+    ["font-family", "font-style", "font-weight", "font-size", "line-height", "letter-spacing", "text-align"],
+    ["outline", "outline-top", "outline-right", "outline-bottom", "outline-left", "border", "border-top", "border-right", "border-bottom", "border-left"],
+    ["color", "opacity", "background", "background-color", "text-shadow"],
+    ["transition", "transform", "animation"]
+  ]
+}
