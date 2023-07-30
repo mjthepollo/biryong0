@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from asgiref.sync import async_to_sync
@@ -58,8 +59,10 @@ class SmallTalkConsumer(WebsocketConsumer):
     def send_previous_messages(self, event):
         start_index = event.get("start_index", 0)
         end_index = event.get('end_index', None)
-        previous_talks = SmallTalk.objects.all()[start_index:end_index] if end_index\
-            else SmallTalk.objects.all()[start_index:]
+        created_time = datetime.datetime.now() - datetime.timedelta(minutes=60)
+        recent_talks = SmallTalk.objects.filter(created__gte=created_time)
+        previous_talks = recent_talks[start_index:end_index] if end_index\
+            else recent_talks[start_index:]
         previous_talks = [get_talk(talk.user, talk.message) for talk in previous_talks]
         self.send(text_data=json.dumps({"type": "previous_talks", "previous_talks": previous_talks}))
 

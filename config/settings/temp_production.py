@@ -9,6 +9,8 @@ CSRF_TRUSTED_ORIGINS = [
     "http://0.0.0.0:8000",
     "https://ddshs.co.kr",
     "http://ddshs.co.kr",
+    "http://20.39.198.155",
+
 ]
 
 DATABASES = {
