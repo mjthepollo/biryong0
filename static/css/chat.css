@@ -103,7 +103,7 @@ body {
   height: 100%;
   padding: 0px 10px;
 
-  font-size: 24px;
+  font-size: 25px;
 
   outline: none;
   border: none;
@@ -175,7 +175,7 @@ body {
   padding: 10px 10px;
 
   font-size: 25px;
-  line-height: 30px;
+  line-height: 25px;
 
   color: #000;
 }
@@ -191,5 +191,30 @@ body {
 @media only screen and (max-width: 600px) {
   .container {
     height: 100%;
+  }
+
+  .message-container span {
+    font-size: 16px;
+  }
+
+  .message-container p {
+    font-size: 20px;
+    line-height: 20px;
+  }
+
+  #chat-message-input {
+    font-size: 20px;
+  }
+
+  .user-thumbnail,
+  .empty-thumbnail {
+    min-width: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .user-thumbnail img {
+    width: 40px;
+    height: 40px;
   }
 }
