@@ -32,7 +32,7 @@
     {{ room_name|json_script:"room-name" }}
     {{ user.username|json_script:"user_id" }}
     <script>
-        alert("SmallTalk는 잡담을 나누는 공간입니다!\n1시간 뒤에 자동으로 채팅이 사라지며, 현재는 개발시스템의 부재로 DB에는 저장하지만 1시간 이후 접속하는 사람에게는 보이지 않게 됩니다.\n앞으로 포스트잇 기능과 에세이 기능이 추가될 예정이니 종종 들려주세요!");
+        alert("SmallTalk는 잡담을 나누는 공간입니다!\n1시간이 지난 채팅은 이후 접속한 사람은 볼 수 없게 되니 현재 같이 얘기를 나누는 사람들과 마음놓고 얘기하시면 됩니다.\n앞으로 포스트잇 기능과 에세이 기능이 추가될 예정이니 종종 들려주세요!");
         const roomName = JSON.parse(document.getElementById('room-name').textContent);
         const userId = JSON.parse(document.getElementById('user_id').textContent);
         let lastTalk;
