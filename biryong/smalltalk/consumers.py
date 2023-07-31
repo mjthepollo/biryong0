@@ -3,6 +3,7 @@ import json
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
+from django.utils.html import escape
 
 from biryong.smalltalk.models import SmallTalk
 
@@ -46,7 +47,7 @@ class SmallTalkConsumer(WebsocketConsumer):
         user = self.scope["user"]
         data_type = text_data_json["type"]
         if data_type == "message":
-            message = text_data_json["content"]
+            message = escape(text_data_json["content"])
             SmallTalk.objects.create(user=user, message=message)
             talk = get_talk(user, message)
             # Send message to room group
