@@ -7,6 +7,8 @@ __pycache__/
 #temp files
 temp_note.md
 
+#SSH KEY FILE
+BIRYONG0_key.pem
 #environment files
 .env
 
