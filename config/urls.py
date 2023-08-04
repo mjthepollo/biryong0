@@ -14,6 +14,7 @@ from config.views import (
     home,
     team_supporters,
     twitch_chat,
+    twitch_set,
     vote_expected_winner,
     vote_MEP_player,
     vote_MVP_and_MEP,
@@ -33,6 +34,7 @@ urlpatterns = [
     path('vote_MVP_and_MEP/', vote_MVP_and_MEP, name='vote_MVP_and_MEP'),
     path('vote_MVP_player/<int:player_pk>/', vote_MVP_player, name='vote_MVP_player'),
     path('vote_MEP_player/<int:player_pk>/', vote_MEP_player, name='vote_MEP_player'),
+    path("twitch_set/", twitch_set, name="twitch_set"),
     path("twitch_chat/", twitch_chat, name="twitch_chat"),
 
 

@@ -26,6 +26,8 @@ class User(AbstractUser):
 
     support_team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True, related_name="supporters")
     cheer_message = models.TextField(blank=True, null=True)
+    twitch_id = models.CharField(max_length=50, blank=True, null=True)
+    info_complete = models.BooleanField(default=False)
 
     competition1_winner_expect = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True,
                                                    blank=True, related_name="competition1_expectors")
@@ -44,8 +46,6 @@ class User(AbstractUser):
                             blank=True, related_name="MVP_voters")
     MEP = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True,
                             blank=True, related_name="MEP_voters")
-
-    info_complete = models.BooleanField(default=False)
 
     def get_absolute_url(self) -> str:
         """Get URL for user's detail view.

@@ -89,5 +89,10 @@ def vote_MEP_player(request, player_pk):
         return JsonResponse({'result': 'fail', 'meesage': f"{e}"})
 
 
+@login_required
+def twitch_set(request):
+    return render(request, "twitch_set.html")
+
+
 def twitch_chat(request):
     return render(request, "twitch_chat.html")
