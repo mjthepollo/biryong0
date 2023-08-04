@@ -15,7 +15,22 @@ class UserAdmin(auth_admin.UserAdmin):
     add_form = UserAdminCreationForm
     fieldsets = (
         (None, {"fields": ("username", "email", "password")}),
-        (_("Personal info"), {"fields": ("name",)}),
+        ("LDN", {"fields":     ("kakao_id",
+                                "profile_image_url",
+                                "thumbnail_image_url",
+                                "support_team",
+                                "cheer_message",
+                                "twitch_id",
+                                "info_complete",
+                                "competition1_winner_expect",
+                                "competition2_winner_expect",
+                                "competition3_winner_expect",
+                                "competition1_POG",
+                                "competition2_POG",
+                                "competition3_POG",
+                                "MVP",
+                                "MEP")}),
+        (_("Personal info"), {"fields": ("nickname",)}),
         (
             _("Permissions"),
             {

@@ -163,3 +163,18 @@ p.message {
   vertical-align: middle;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
 }
+
+.mockup-input {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+
+  height: 40px;
+}
+#team1_chat .mockup-input {
+  background: var(--red);
+}
+#team2_chat .mockup-input {
+  background: var(--blue);
+}

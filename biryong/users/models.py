@@ -54,3 +54,9 @@ class User(AbstractUser):
 
         """
         return reverse("users:detail", kwargs={"pk": self.id})
+
+    def is_team1_supporter(self):
+        return self.support_team == Team.objects.get(number=1)
+
+    def is_team2_supporter(self):
+        return self.support_team == Team.objects.get(number=2)

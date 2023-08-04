@@ -27,10 +27,15 @@
             </div>
         </div>
     </div>
+    {% if user.is_team1_supporter %}
     <div class="chat-input shadow">
         <input id="team1-chat-message-input" class="chat-message-input" type="text" size="100" placeholder="채팅을 입력해주세요!">
         <input hidden id="chat-message-submit" type="button" value="Send">
     </div> 
+    {% else %}
+    <div class="mockup-input">
+    </div>
+    {% endif %}
 </div>
 <div id="team2_chat" class="shadow">
     <div class="chat-header">ZI존</div>
@@ -60,8 +65,13 @@
             </div>
         </div>
     </div>
+    {% if user.is_team2_supporter %}
     <div class="chat-input shadow">
         <input class="chat-message-input" type="text" size="100" placeholder="채팅을 입력해주세요!">
         <input hidden id="chat-message-submit" type="button" value="Send">
     </div> 
+    {% else %}
+    <div class="mockup-input">
+    </div>
+    {% endif %}
 </div>

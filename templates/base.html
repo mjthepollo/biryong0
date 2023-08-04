@@ -1,5 +1,6 @@
 
-{% load static i18n %}<!DOCTYPE html>
+{% load static i18n %}
+<!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}">
   <head>
@@ -39,21 +40,23 @@
       document.documentElement.style.setProperty("--vw", `${vw}px`);
     });
   </script>
-  {% block javascript %}
   <script defer
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"
         integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g=="
         crossorigin="anonymous"
         referrerpolicy="no-referrer"></script>
   <script defer src="{% static 'js/project.js' %}"></script>
+  {% block javascript %}
   {% endblock javascript %}
 </head>
 <body>
+  {% block header %}
   <header>
-    <img class="team_logo" src="{% static 'images/team1.png' %}">
+    <a href="{% url 'team_supporters' 1 %}" target="_blank"><img class="team_logo" src="{% static 'images/team1.png' %}"></a>
     <div class="vs">vs</div>
-    <img class="team_logo" src="{% static 'images/team2.png' %}">
+    <a href="{% url 'team_supporters' 2 %}" target="_blank"><img class="team_logo" src="{% static 'images/team2.png' %}"></a>
   </header>
+  {% endblock header %}
   {% block content %}
   {% endblock content %}
   {% block modal %}

@@ -14,6 +14,7 @@ POSITION_CHOICES = (
 
 class Team(models.Model):
     name = models.CharField(max_length=30)
+    number = models.IntegerField(default=1)
 
     @property
     def bottom(self):
@@ -34,6 +35,9 @@ class Team(models.Model):
     @property
     def supporter(self):
         return self.players.get(position="supporter")
+
+    def __str__(self):
+        return self.name
 
 
 TIER_CHOICES = (
@@ -91,8 +95,13 @@ class Player(models.Model):
         else:
             return "ERROR"
 
+    def __str__(self):
+        return f"{self.name}({self.nickname})"
+
 
 class Competition(models.Model):
+    class Meta:
+        ordering = ['number']
     number = models.IntegerField(default=0)
     team1 = models.ForeignKey(Team,
                               on_delete=models.SET_NULL, null=True,
@@ -101,20 +110,20 @@ class Competition(models.Model):
                               on_delete=models.SET_NULL, null=True,
                               blank=True, related_name="team2")
 
-    open_POG_vote = models.BooleanField(default=False)
-    finish_POG_vote = models.BooleanField(default=False)
-
     open_expect_vote = models.BooleanField(default=False)
     finish_expect_vote = models.BooleanField(default=False)
 
+    open_POG_vote = models.BooleanField(default=False)
+    finish_POG_vote = models.BooleanField(default=False)
+
     @property
     def pog_info(self):
-        pog_votes_info = [(getattr(player, f"competition{self.index}_POG_voters").count(),
+        pog_votes_info = [(getattr(player, f"competition{self.number}_POG_voters").count(),
                            f"{player.name}/{player.nickname}") for player in self.team1.players.all()]
-        pog_votes_info += [(getattr(player, f"competition{self.index}_POG_voters").count(),
+        pog_votes_info += [(getattr(player, f"competition{self.number}_POG_voters").count(),
                             f"{player.name}/{player.nickname}") for player in self.team2.players.all()]
         pog_votes_info.sort(key=lambda x: x[0], reverse=True)
         return str((pog_votes_info[:3]))
 
     def __str__(self):
-        return f"[{self.team1.name} vs {self.team2.name}] {self.index}경기"
+        return f"[{self.team1.name} vs {self.team2.name}] {self.number}경기"

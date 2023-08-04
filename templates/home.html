@@ -9,11 +9,16 @@
 <div class="main-content-container main-content-container-with-chat">
     <img class="main-content" src="{% static 'images/ldn_final.png'%}">
     <div class="main-functions">
-        <a class="red-box shadow" href="" target=”_blank”>1경기 승부예측</a>
-        <a class="purple-box shadow" href="" target=”_blank”>Mobile을 위한<br>Twitch 연동</a>
-        <a class="blue-box shadow" href="" target=”_blank”>1경기 POG 선정</a>
+        {% if user.info_complete %}
+        <a id="expect_winner" class="red-box shadow" href="" target=”_blank”>1경기 승부예측</a>
+        <a class="purple-box active shadow" href="{% url 'set_additional_info' %}" target=”_blank”>Mobile을 위한<br>Twitch 연동</a>
+        <a id="vote_POG" class="blue-box shadow" href="" target=”_blank”>1경기 POG 선정</a>
+        {% else %}
+        <a class="kakao-box active shadow" href="{% url 'set_additional_info' %}">KAKAO 계정으로 참여하기</a>
+        {% endif %}
     </div>
 </div>
-
-
 {% endblock content %}
+{% block inline_javascript %}
+<script type='text/javascript' src="{% static 'js/set_url.js' %}"></script>
+{% endblock inline_javascript %}

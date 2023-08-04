@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link href="{% static 'css/team_supporters.css' %}" rel="stylesheet" />
+{% endblock css%}
+{% block header %}
+<header>
+    <a href="{% url 'home' %}"><img class="team_logo" src="{% static 'images/team1.png' %}"></a>
+    <div class="vs">vs</div>
+    <a href="{% url 'home' %}"><img class="team_logo" src="{% static 'images/team2.png' %}"></a>
+  </header>
+{% endblock header %}
+{% block content %}
+    <div class='supporters {{class}}'>
+        {% for supporter in supporters %}
+            <div class="cheer_message">
+                <img class="thumbanail" src="{{ supporter.thumbnail_image_url }}">
+                <span class="supporter_name">{{supporter.nickname}}</span>
+                <div class="supporter_message_container">
+                    <p class="supporter_message">{{supporter.cheer_message}}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

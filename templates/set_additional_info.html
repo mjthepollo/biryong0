@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link href="{% static 'css/set_additional_info.css' %}" rel="stylesheet" />
+{% endblock css%}
+{% block header %}
+<header>
+    <a href="{% url 'home' %}"><img class="team_logo" src="{% static 'images/team1.png' %}"></a>
+    <div class="vs">vs</div>
+    <a href="{% url 'home' %}"><img class="team_logo" src="{% static 'images/team2.png' %}"></a>
+  </header>
+{% endblock header %}
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+        <span>응원팀 설정</span>
+        {{additional_info_form.support_team}}
+    </div>
+    <div class='mb-3'>
+        <span>응원 메세지 설정</span>
+        {{additional_info_form.cheer_message}}
+    </div>
+    <div class='mb-3'>    
+        <span>트위치 아이디 설정</span>
+        {{additional_info_form.twitch_id}}
+    </div>
+    <button class="kakao-box">정보 업데이트</button>
+</form>
+{% endblock content %}

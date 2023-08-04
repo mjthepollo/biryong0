@@ -21,18 +21,19 @@
   text-align: center;
 
   color: #000;
+  background: linear-gradient(240deg, #3c3c3c 0%, #848484 100%);
 
   text-decoration: none;
 }
 
-.red-box {
+.red-box.active {
   background: linear-gradient(240deg, var(--dark-red) 0%, var(--red) 100%);
 }
 
-.blue-box {
+.blue-box.active {
   background: linear-gradient(120deg, var(--dark-blue) 0%, var(--blue) 100%);
 }
-.purple-box {
+.purple-box.active {
   background: linear-gradient(
     120deg,
     var(--dark-purple) 0%,
@@ -40,8 +41,8 @@
   );
 }
 
-.kakao-box {
-  min-width: 400px;
+.kakao-box.active {
+  min-width: 600px;
 
   color: var(--kakao-brown);
   background: linear-gradient(

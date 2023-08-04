@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from biryong.competition.models import Competition, Player, Team
+from biryong.users.forms import AdditionalInfoForm
 
 
 def home(request):
@@ -11,15 +12,18 @@ def home(request):
 
 
 @login_required
-def team_supporters(request, pk):
-    team = Team.objects.get(pk=pk)
-    return render(request, "team_supporters.html", {"supporters": team.supporters.all()})
+def team_supporters(request, number):
+    team = Team.objects.get(number=number)
+    return render(request, "team_supporters.html", {"supporters": team.supporters.all(), "class": f"team{team.number}"})
 
 
 @login_required
 def expect_winner(request, competition_pk):
     competition = Competition.objects.get(pk=competition_pk)
-    return render(request, "expect_winner.html", {"competition": competition})
+    if competition.open_expect_vote:
+        return render(request, "expect_winner.html", {"competition": competition})
+    else:
+        return redirect("home")
 
 
 def vote_expected_winner(request, competition_pk, team_pk):
@@ -39,7 +43,10 @@ def vote_expected_winner(request, competition_pk, team_pk):
 def vote_POG(request, competition_pk):
     competition = Competition.objects.get(pk=competition_pk)
     POG_of_user = request.user.competition1_POG
-    return render(request, "select_POG.html", {"competition": competition, "POG_of_user": POG_of_user})
+    if competition.open_POG_vote:
+        return render(request, "vote_POG.html", {"competition": competition, "POG_of_user": POG_of_user})
+    else:
+        return redirect("home")
 
 
 def vote_POG_player(request, competition_pk, player_pk):
@@ -90,9 +97,70 @@ def vote_MEP_player(request, player_pk):
 
 
 @login_required
-def twitch_set(request):
-    return render(request, "twitch_set.html")
+def set_additional_info(request):
+    if request.method == "GET":
+        additional_info_form = AdditionalInfoForm(instance=request.user)
+        return render(request, "set_additional_info.html", context={"additional_info_form": additional_info_form})
+    else:
+        additional_info_form = AdditionalInfoForm(request.POST, instance=request.user)
+        if additional_info_form.is_valid():
+            additional_info_form.save()
+            request.user.info_complete = True
+            request.user.save()
+            return redirect(reverse("home"))
+        else:
+            raise Exception("폼이 유효하지 않습니다.")
 
 
 def twitch_chat(request):
     return render(request, "twitch_chat.html")
+
+
+def get_expect_winner_url(request):
+    competition1 = Competition.objects.get(number=1)
+    competition2 = Competition.objects.get(number=2)
+    competition3 = Competition.objects.get(number=3)
+    if competition1.open_expect_vote and not competition1.finish_expect_vote:
+        return_json = {'inner_html': '1경기 승자예측', 'href': reverse(
+            "expect_winner", args=[competition1.pk]), 'active': True}
+    elif competition1.open_expect_vote and competition1.finish_expect_vote and not competition2.open_expect_vote:
+        return_json = {'inner_html': '1경기 승자예측', 'href': "", 'active': False}
+    elif competition2.open_expect_vote and not competition2.finish_expect_vote:
+        return_json = {'inner_html': '2경기 승자예측', 'href': reverse(
+            "expect_winner", args=[competition1.pk]), 'active': True}
+    elif competition2.open_expect_vote and competition2.finish_expect_vote and not competition3.open_expect_vote:
+        return_json = {'inner_html': '2경기 승자예측', 'href': "", 'active': False}
+    elif competition3.open_expect_vote and not competition3.finish_expect_vote:
+        return_json = {'inner_html': '3경기 승자예측', 'href': reverse(
+            "expect_winner", args=[competition3.pk]), 'active': True}
+    else:
+        return_json = {'inner_html': 'MVP/MEP 투표',
+                       'href': reverse("vote_MVP_and_MEP"), 'active': True}
+    return JsonResponse(return_json)
+
+
+def get_vote_POG_url(request):
+    competition1 = Competition.objects.get(number=1)
+    competition2 = Competition.objects.get(number=2)
+    competition3 = Competition.objects.get(number=3)
+    if not competition1.open_POG_vote and not competition1.finish_POG_vote:
+        return_json = {'inner_html': '1경기 POG 투표', 'href': reverse(
+            "vote_POG", args=[competition1.pk]), 'active': False}
+    elif competition1.open_POG_vote and not competition1.finish_POG_vote:
+        return_json = {'inner_html': '1경기 POG 투표', 'href': reverse(
+            "vote_POG", args=[competition1.pk]), 'active': True}
+    elif competition1.open_POG_vote and competition1.finish_POG_vote and not competition2.open_POG_vote:
+        return_json = {'inner_html': '1경기 POG 투표', 'href': "", 'active': False}
+    elif competition2.open_POG_vote and not competition2.finish_POG_vote:
+        return_json = {'inner_html': '2경기 POG 투표', 'href': reverse(
+            "vote_POG", args=[competition1.pk]), 'active': True}
+    elif competition2.open_POG_vote and competition2.finish_POG_vote and not competition3.open_POG_vote:
+        return_json = {'inner_html': '2경기 POG 투표', 'href': "", 'active': False}
+    elif competition3.open_POG_vote and not competition3.finish_POG_vote:
+        return_json = {'inner_html': '3경기 POG 투표', 'href': reverse(
+            "vote_POG", args=[competition3.pk]), 'active': True}
+    elif competition3.open_POG_vote and competition3.finish_POG_vote:
+        return_json = {'inner_html': '3경기 POG 투표', 'href': "", 'active': False}
+    else:
+        return_json = {'inner_html': '3경기 POG 투표', 'href': "", 'active': False}
+    return JsonResponse(return_json)
