@@ -11,26 +11,32 @@
     <meta name="author"
           content="mjthepollo" />
     <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <title>
       {% block title %}
-      biryong
+      LDN
     {% endblock title %}
   </title>
-  {% block css %}
-    <!-- Latest compiled and minified Bootstrap CSS -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
-          integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
-          crossorigin="anonymous"
-          referrerpolicy="no-referrer" />
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+        integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer" />
   <link href="{% static 'css/project.css' %}" rel="stylesheet" />
+  {% block css %}
   {% endblock css %}
   <script>
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
+    let vw = window.innerWidth * 0.01;
+    document.documentElement.style.setProperty("--vw", `${vw}px`);
     window.addEventListener("resize", () => {
       let vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty("--vh", `${vh}px`);
+      let vw = window.innerWidth * 0.01;
+      document.documentElement.style.setProperty("--vw", `${vw}px`);
     });
   </script>
   {% block javascript %}
@@ -43,52 +49,13 @@
   {% endblock javascript %}
 </head>
 <body>
-  <div class="mb-1">
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
-      <div class="container-fluid">
-        <button class="navbar-toggler navbar-toggler-right"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="{% url 'home' %}">biryong</a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'home' %}">Home <span class="visually-hidden">(current)</span></a>
-            </li>
-            {% if request.user.is_authenticated %}
-              <li class="nav-item">
-                <a class="nav-link"
-                   href="{% url 'users:detail' request.user.pk %}">{% translate "My Profile" %}</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link"
-                   href="{% url 'logout' %}">{% translate "Logout" %}</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link"
-                   href="/smalltalk/lobby/">{% translate "SmallTalk" %}</a>
-              </li>
-            {% else %}
-              <li class="nav-item">
-                <a id="log-in-link" class="nav-link" href="{% url 'login' %}">{% translate "Sign In" %}</a>
-              </li>
-            {% endif %}
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </div>
-  <div class="container">
-    {% block content %}
-      <p>Use this document as a way to quick start any new project.</p>
-    {% endblock content %}
-  </div>
+  <header>
+    <img class="team_logo" src="{% static 'images/team1.png' %}">
+    <div class="vs">vs</div>
+    <img class="team_logo" src="{% static 'images/team2.png' %}">
+  </header>
+  {% block content %}
+  {% endblock content %}
   {% block modal %}
   {% endblock modal %}
   {% block inline_javascript %}

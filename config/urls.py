@@ -9,16 +9,40 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
 
 from config.auth_views import login, logout
-from config.views import home
+from config.views import (
+    expect_winner,
+    home,
+    team_supporters,
+    twitch_chat,
+    vote_expected_winner,
+    vote_MEP_player,
+    vote_MVP_and_MEP,
+    vote_MVP_player,
+    vote_POG,
+    vote_POG_player,
+)
 
 urlpatterns = [
     path("", home, name="home"),
+    path('team_supporters/<int:pk>/', team_supporters, name='team_supporters'),
+    path('expect_winner/<int:competition_pk>/', expect_winner, name='expect_winner'),
+    path('vote_expected_winner/<int:competition_pk>/<int:team_pk>/', vote_expected_winner, name='vote_expected_winner'),
+    path('vote_POG/<int:competition_pk>/', vote_POG, name='vote_POG'),
+    path('vote_POG_player/<int:competition_pk>/<int:player_pk>/',
+         vote_POG_player, name='vote_POG_player'),
+    path('vote_MVP_and_MEP/', vote_MVP_and_MEP, name='vote_MVP_and_MEP'),
+    path('vote_MVP_player/<int:player_pk>/', vote_MVP_player, name='vote_MVP_player'),
+    path('vote_MEP_player/<int:player_pk>/', vote_MEP_player, name='vote_MEP_player'),
+    path("twitch_chat/", twitch_chat, name="twitch_chat"),
+
+
     path("login/", login, name="login"),
     path("logout/", logout, name="logout"),
     path(settings.ADMIN_URL, admin.site.urls),
     path("kakao/", include("config.auth_urls", namespace="kakao")),
     path("users/", include("biryong.users.urls", namespace="users")),
-    path("smalltalk/", include("biryong.smalltalk.urls", namespace="smalltalk")),
+
+    # path("smalltalk/", include("biryong.smalltalk.urls", namespace="smalltalk")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + [
     re_path(r'^staticfiles/(?P<path>.*)$', serve, {
             'document_root': settings.STATIC_ROOT,

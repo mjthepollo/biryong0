@@ -1,13 +1,97 @@
-/* These styles are generated from project.scss. */
+:root {
+  --red: #fc0202;
+  --dark-red: #710000;
+  --blue: #0293fc;
+  --dark-blue: #4200ff;
+  --purple: #f702fc;
+  --dark-purple: #8f00ff;
+  --gray: #d9d9d9;
+  --kakao-yellow: #fefe06;
+  --kakao-dark-yellow: #f7e10c;
+  --kakao-brown: #391c1b;
+}
+
+.shadow {
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.5);
+}
+
+.hansans {
+  font-family: "Black Han Sans", sans-serif;
+}
+
+.notosans {
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+body {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  min-height: calc(var(--vw) * 100);
+  min-height: calc(var(--vh) * 100);
+
+  background: rgb(252, 2, 2);
+  background: linear-gradient(
+    98deg,
+    var(--red) 0%,
+    var(--red) 40%,
+    var(--blue) 60%,
+    var(--blue) 100%
+  );
+
+  flex-shrink: 0;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 170px;
+}
+
+.vs {
+  margin: 0px 100px;
+
+  font-family: "Black Han Sans", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 60px;
+  line-height: normal;
+  text-align: center;
+
+  color: #fff;
+}
+
+.team_logo {
+  width: 150px;
+}
+
+.main-content-container {
+  width: 100vw;
+}
+
+.main-content-container-with-chat {
+  width: calc(var(--vw) * 100 - 660px);
+}
+
+.main-content {
+  width: 100%;
+}
 
 .alert-debug {
   color: black;
   background-color: white;
+
   border-color: #d6e9c6;
 }
 
 .alert-error {
   color: #b94a48;
   background-color: #f2dede;
+
   border-color: #eed3d7;
 }

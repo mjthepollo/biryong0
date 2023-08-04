@@ -87,6 +87,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "biryong.users.apps.UsersConfig",
+    "biryong.competition.apps.CompetitionConfig",
     "biryong.smalltalk.apps.SmalltalkConfig",
     "biryong.post_it.apps.PostItConfig",
 ]
