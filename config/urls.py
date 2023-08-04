@@ -15,6 +15,8 @@ from config.views import (
     get_vote_POG_url,
     home,
     set_additional_info,
+    team1_chat,
+    team2_chat,
     team_supporters,
     twitch_chat,
     vote_expected_winner,
@@ -41,6 +43,9 @@ urlpatterns = [
 
     path('get_expect_winner_url/', get_expect_winner_url, name='get_expect_winner_url'),
     path('get_vote_POG_url/', get_vote_POG_url, name='get_vote_POG_url'),
+
+    path('team1_chat/', team1_chat, name='team1_chat'),
+    path('team2_chat/', team2_chat, name='team2_chat'),
 
     path("login/", login, name="login"),
     path("logout/", logout, name="logout"),

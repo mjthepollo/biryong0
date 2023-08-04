@@ -14,7 +14,7 @@
     <div class='supporters {{class}}'>
         {% for supporter in supporters %}
             <div class="cheer_message">
-                <img class="thumbanail" src="{{ supporter.thumbnail_image_url }}">
+                <img class="user_thumbnail" src="{{ supporter.thumbnail_image_url }}">
                 <span class="supporter_name">{{supporter.nickname}}</span>
                 <div class="supporter_message_container">
                     <p class="supporter_message">{{supporter.cheer_message}}</p>

@@ -164,3 +164,11 @@ def get_vote_POG_url(request):
     else:
         return_json = {'inner_html': '3경기 POG 투표', 'href': "", 'active': False}
     return JsonResponse(return_json)
+
+
+def team1_chat(request):
+    return render(request, "team1_chat.html")
+
+
+def team2_chat(request):
+    return render(request, "team2_chat.html")

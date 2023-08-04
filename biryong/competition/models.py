@@ -16,6 +16,14 @@ class Team(models.Model):
     name = models.CharField(max_length=30)
     number = models.IntegerField(default=1)
 
+    @classmethod
+    def get_team1(cls):
+        return cls.objects.get(number=1)
+
+    @classmethod
+    def get_team2(cls):
+        return cls.objects.get(number=2)
+
     @property
     def bottom(self):
         return self.players.get(position="bottom")
