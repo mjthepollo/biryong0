@@ -67,11 +67,13 @@ def kakao_redirect(request):
     username = user_info["kakao_id"]
     email = user_info["email"]
     nickname = user_info["nickname"]
+    kakao_id = user_info["kakao_id"]
     profile_image_url = user_info["profile_image_url"]
     thumbnail_image_url = user_info["thumbnail_image_url"]
     if User.objects.filter(username=username).exists():
         user = User.objects.get(username=username)
         user.nickname = nickname
+        user.kakao_id = kakao_id
         user.profile_image_url = profile_image_url
         user.thumbnail_image_url = thumbnail_image_url
         user.save()
@@ -85,6 +87,7 @@ def kakao_redirect(request):
         user = User.objects.create_user(
             username=username, nickname=nickname,
             email=email, password=random_password,
+            kakao_id=kakao_id,
             profile_image_url=profile_image_url, thumbnail_image_url=thumbnail_image_url)
         login_user(request, user)
         return redirect(reverse("set_additional_info"))

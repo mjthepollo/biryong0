@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="{% static 'css/project.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/team_chat.css' %}" rel="stylesheet" />
+    <title>Team2Chat</title>
+  </head>
+  <body>
+    <div id="team2_chat" class="shadow">
+      <div class="chat-header">ZI존</div>
+      <div class="chat-container"></div>
+    </div>
+  </body>
+  <script type="module" src="{% static 'js/team2_chat.js' %}"></script>
+</html>

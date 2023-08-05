@@ -1,0 +1,11 @@
+@import url("./chat.css");
+#team1_chat,
+#team2_chat {
+  right: 0px;
+
+  width: 100%;
+}
+
+.chat-container {
+  bottom: 0px;
+}

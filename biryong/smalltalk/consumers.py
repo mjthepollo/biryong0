@@ -5,7 +5,9 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from django.utils.html import escape
 
+from biryong.competition.models import Team
 from biryong.smalltalk.models import SmallTalk
+from biryong.users.models import User
 
 
 def get_talk(user, message):
@@ -18,7 +20,7 @@ class SmallTalkConsumer(WebsocketConsumer):
 
     def connect(self):
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
-        self.room_group_name = "chat_%s" % self.room_name
+        self.room_group_name = "smalltalk_%s" % self.room_name
         # Join room group
         self.connected_users.add(self.scope["user"])
         async_to_sync(self.channel_layer.group_add)(
@@ -80,6 +82,88 @@ class SmallTalkConsumer(WebsocketConsumer):
     # Receive message from room group
     def chat_message(self, event):
         talk = event["talk"]
-        # Send message to WebSocket
-        print(talk)
+        self.send(text_data=json.dumps({"type": "talk", "talk": talk}))
+
+
+class ChatConsumer(WebsocketConsumer):
+    def connect(self):
+        self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
+        self.room_group_name = self.room_name
+        # Join room group
+        async_to_sync(self.channel_layer.group_add)(
+            self.room_group_name, self.channel_name
+        )
+
+        self.accept()
+
+    def disconnect(self, close_code):
+        # Leave room group
+        async_to_sync(self.channel_layer.group_discard)(
+            self.room_group_name, self.channel_name
+        )
+
+    # Receive message from WebSocket
+    def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        user = self.scope["user"]
+        data_type = text_data_json["type"]
+        if data_type == "message":
+            message = escape(text_data_json["content"])
+            talk = get_talk(user, message)
+            # Send message to room group
+            async_to_sync(self.channel_layer.group_send)(
+                self.room_group_name, {"type": "chat_message", "talk": talk}
+            )
+        else:
+            raise Exception("Unknown data type.")
+
+    # Receive message from room group
+    def chat_message(self, event):
+        talk = event["talk"]
+        self.send(text_data=json.dumps({"type": "talk", "talk": talk}))
+
+
+class TwitchChatConsumer(WebsocketConsumer):
+    def connect(self):
+        self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
+        self.room_group_name = "chat_%s" % self.room_name
+        # Join room group
+        async_to_sync(self.channel_layer.group_add)(
+            self.room_group_name, self.channel_name
+        )
+
+        self.accept()
+
+    def disconnect(self, close_code):
+        # Leave room group
+        async_to_sync(self.channel_layer.group_discard)(
+            self.room_group_name, self.channel_name
+        )
+
+    # Receive message from WebSocket
+    def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        print(text_data_json)
+        twitch_id = text_data_json["twitch_id"]
+        user = User.objects.filter(twitch_id=twitch_id).first()
+        print(user)
+        if user:
+            message = escape(text_data_json["message"])
+            talk = get_talk(user, message)
+            if user.support_team == Team.get_team1():
+                async_to_sync(self.channel_layer.group_send)(
+                    "team1", {"type": "chat_message", "talk": talk}
+                )
+                print('TEAM1')
+            elif user.support_team == Team.get_team2():
+                async_to_sync(self.channel_layer.group_send)(
+                    "team2", {"type": "chat_message", "talk": talk}
+                )
+                print('TEAM2')
+            else:
+                print('WTF?!')
+
+    # Receive message from room group
+    def chat_message(self, event):
+        talk = event["talk"]
         self.send(text_data=json.dumps({"type": "talk", "talk": talk}))

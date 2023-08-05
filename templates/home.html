@@ -26,5 +26,7 @@
 </div>
 {% endblock content %}
 {% block inline_javascript %}
-<script type='text/javascript' src="{% static 'js/set_url.js' %}"></script>
+<script type='module' src="{% static 'js/set_url.js' %}"></script>
+<script type='module' src="{% static 'js/team1_chat.js' %}"></script>
+<script type='module' src="{% static 'js/team2_chat.js' %}"></script>
 {% endblock inline_javascript %}

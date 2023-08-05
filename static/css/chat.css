@@ -63,6 +63,12 @@
   left: 0px;
   right: 0px;
   bottom: 40px;
+
+  overflow-y: scroll;
+}
+
+.chat-container::-webkit-scrollbar {
+  display: none;
 }
 
 #team1_chat .chat-container {
@@ -82,16 +88,26 @@
 }
 
 .chat-line__left {
-  min-width: 50px;
+  max-width: 50px;
+  width: 50px;
 
   font-family: "Black Han Sans", sans-serif;
 }
 
 .chat-line__left .nickname {
+  display: block;
+  overflow: hidden;
+
+  width: 50px;
+
   font-weight: bold;
   font-size: 16px;
 
   color: white;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 
 .chat-line__right {

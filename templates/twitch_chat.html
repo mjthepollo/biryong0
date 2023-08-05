@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <link href="{% static 'css/project.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/team_chat.css' %}" rel="stylesheet" />
+    <title>TwitchChat</title>
+  </head>
+  <body>
+    <iframe id="chat_embed" src="https://www.twitch.tv/embed/mjthepollo/chat?parent=minbungs.site" height="500" width="350"></iframe>
+  </body>
+  <script type="text/javascript">
+    const chatArea = document.querySelector('.chat-scrollable-area__message-container');
+    const twitchChatSocket = new WebSocket(
+        "wss://" + "minbugs.site" + "/ws/twitch_chat/" + "twitch" + "/"
+    );
+
+
+    function callback (mutations) {
+        mutations.forEach(mutation => {
+            if (mutation.type === 'childList') {
+              mutation.addedNodes.forEach(node => {
+                console.log(node);
+                const twitchID = node.querySelector('span.chat-author__display-name').getAttribute("data-a-user");
+                const text = node.querySelector('span[data-a-target="chat-line-message-body"]').innerText;
+                console.log(`${twitchID} : ${text}`);
+                twitchChatSocket.send(
+                    JSON.stringify({
+                      twitch_id: twitchID,
+                      message: text,
+                    })
+                  );
+              });
+            }
+          });
+    }
+    let observer = new MutationObserver(callback);
+    
+    const options = {
+        childList: true,
+      };
+    observer.observe(chatArea, options);
+
+
+  </script>
+</html>

@@ -1,35 +1,10 @@
 
 <div id="team1_chat" class='shadow'>
     <div class="chat-header">GOAT</div>
-    <div class='chat-container'>
-        <div class='chat-line'>
-            <div class=chat-line__left>
-                <span class="nickname">김민준</span>
-            </div>
-            <div class="chat-line__right">
-                <p class="message">나는 ㅈ됐다!</p>
-            </div>
-        </div>
-        <div class='chat-line'>
-            <div class=chat-line__left>
-                <span class="nickname">김민준</span>
-            </div>
-            <div class="chat-line__right">
-                <p class="message">나는 진짜진짜 진짜 ㅈ됐다!</p>
-            </div>
-        </div>
-        <div class='chat-line'>
-            <div class=chat-line__left>
-                <span class="nickname">김민준</span>
-            </div>
-            <div class="chat-line__right">
-                <p class="message">나는 진짜진짜진짜진짜 진짜 지지인짜 진짜 진짜 진짜 씨발 조됐다!!</p>
-            </div>
-        </div>
-    </div>
+    <div class='chat-container'></div>
     {% if user.is_team1_supporter %}
     <div class="chat-input shadow">
-        <input id="team1-chat-message-input" class="chat-message-input" type="text" size="100" placeholder="채팅을 입력해주세요!">
+        <input class="chat-message-input" type="text" size="100" placeholder="채팅을 입력해주세요!">
         <input hidden id="chat-message-submit" type="button" value="Send">
     </div> 
     {% else %}
@@ -39,32 +14,7 @@
 </div>
 <div id="team2_chat" class="shadow">
     <div class="chat-header">ZI존</div>
-    <div class='chat-container'>
-        <div class='chat-line'>
-            <div class=chat-line__left>
-                <span class="nickname">김민준</span>
-            </div>
-            <div class="chat-line__right">
-                <p class="message">나는 ㅈ됐다!</p>
-            </div>
-        </div>
-        <div class='chat-line'>
-            <div class=chat-line__left>
-                <span class="nickname">김민준</span>
-            </div>
-            <div class="chat-line__right">
-                <p class="message">나는 진짜진짜 진짜 ㅈ됐다!</p>
-            </div>
-        </div>
-        <div class='chat-line'>
-            <div class=chat-line__left>
-                <span class="nickname">김민준</span>
-            </div>
-            <div class="chat-line__right">
-                <p class="message">나는 진짜진짜진짜진짜 진짜 지지인짜 진짜 진짜 진짜 씨발 조됐다!!</p>
-            </div>
-        </div>
-    </div>
+    <div class='chat-container'></div>
     {% if user.is_team2_supporter %}
     <div class="chat-input shadow">
         <input class="chat-message-input" type="text" size="100" placeholder="채팅을 입력해주세요!">

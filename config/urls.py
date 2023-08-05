@@ -46,6 +46,7 @@ urlpatterns = [
 
     path('team1_chat/', team1_chat, name='team1_chat'),
     path('team2_chat/', team2_chat, name='team2_chat'),
+    path('twitch_chat/', twitch_chat, name='twitch_chat'),
 
     path("login/", login, name="login"),
     path("logout/", logout, name="logout"),
