@@ -9,3 +9,34 @@
 .chat-container {
   bottom: 0px;
 }
+
+#team1_chat .chat-container {
+  background-color: transparent;
+}
+
+#team2_chat .chat-container {
+  background-color: transparent;
+}
+
+#team1_chat .chat-line__left .nickname {
+  color: var(--red);
+}
+
+#team2_chat .chat-line__left .nickname {
+  color: var(--blue);
+}
+
+.chat-line__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  max-width: 70%;
+}
+
+p.message {
+  margin: 0px;
+  padding: 0px;
+  background: transparent;
+  text-shadow: 1px 1px 2px white;
+}
