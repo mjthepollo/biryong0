@@ -1,0 +1,17 @@
+{% if not POG_of_user %}
+<div class="team{{team.number}}_votes">
+    {% for player in team.players_in_order %}
+    <a class="vote shadow" href="{% url 'vote_POG_player' competition.pk player.pk %}">POG</a>
+    {% endfor %}
+</div>
+{% else %}
+<div class="team{{team.number}}_votes">
+    {% for player in team.players_in_order %}
+        {% if player == POG_of_user %}
+        <div class="vote picked shadow">PICK</div>
+        {% else %}
+        <div class="vote voted shadow">POG</div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}

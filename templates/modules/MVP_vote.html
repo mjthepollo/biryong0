@@ -1,0 +1,17 @@
+{% if not MVP_of_user %}
+<div class="team{{team.number}}_votes">
+    {% for player in team.players_in_order %}
+    <a class="vote shadow MVP_vote" href="{% url 'vote_MVP_player' player.pk %}">MVP</a>
+    {% endfor %}
+</div>
+{% else %}
+<div class="team{{team.number}}_votes">
+    {% for player in team.players_in_order %}
+        {% if player == MVP_of_user %}
+        <div class="vote picked shadow">PICK</div>
+        {% else %}
+        <div class="vote voted shadow">MVP</div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}

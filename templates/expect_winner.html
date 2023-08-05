@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link href="{% static 'css/vote.css' %}" rel="stylesheet" />
+{% endblock css%}
+{% block header %}
+<header>
+    <a href="{% url 'home' %}"><img class="team_logo" src="{% static 'images/team1.png' %}"></a>
+    <div class="vs">vs</div>
+    <a href="{% url 'home' %}"><img class="team_logo" src="{% static 'images/team2.png' %}"></a>
+</header>
+{% endblock header %}
+{% block content %}
+<h1>{{competition.number}}경기 승부예측</h1>
+<div class="vote_table">
+    {% include 'modules/players_table.html' %}
+</div>
+<div class="expect_win_info">
+    <a class="vote team1_vote shadow" href="{% url 'vote_expected_winner' competition.pk competition.team1.pk %}">{{competition.team1.name}}</a>
+    <div class="win_rate shadow">
+        <div class="win_rate_bar team1_win_rate_bar" style="width:{{team1_expectors_rate}}%;">{% if team1_expectors_count != 0 %}{{team1_expectors_count}}명{% endif %}</div>
+        <div class="win_rate_bar team2_win_rate_bar" style="width:{{team2_expectors_rate}}%;">{% if team2_expectors_count != 0 %}{{team2_expectors_count}}명{% endif %}</div>
+    </div>
+    <a class="vote team2_vote shadow" href="{% url 'vote_expected_winner' competition.pk competition.team2.pk %}">{{competition.team2.name}}</a>
+</div>
+{% endblock content %}

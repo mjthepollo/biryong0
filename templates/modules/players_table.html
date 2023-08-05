@@ -1,0 +1,21 @@
+<div class='player_table shadow'>
+    <div class="team1_header">{{competition.team1.name}}</div>
+    <div class="team2_header">{{competition.team2.name}}</div>
+    {% for player in competition.all_players_in_order %}
+        {% if not forloop.counter|divisibleby:2 %}
+        <div class="player_info">
+            <img class="position" src="{{player.position_image_url}}">
+            <img class="tier" src="{{player.tier_image_url}}">
+            <span class="nickname">{{player.nickname}}</span>
+            <span class="name">{{player.name}}</span>
+        </div>
+        {% else %}
+        <div class="player_info">
+            <span class="name">{{player.name}}</span>
+            <span class="nickname">{{player.nickname}}</span>
+            <img class="tier" src="{{player.tier_image_url}}">
+            <img class="position" src="{{player.position_image_url}}">
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link href="{% static 'css/vote.css' %}" rel="stylesheet" />
+{% endblock css%}
+{% block header %}
+<header>
+    <a href="{% url 'home' %}"><img class="team_logo" src="{% static 'images/team1.png' %}"></a>
+    <div class="vs">vs</div>
+    <a href="{% url 'home' %}"><img class="team_logo" src="{% static 'images/team2.png' %}"></a>
+</header>
+{% endblock header %}
+{% block content %}
+<h1>{{competition.number}}경기 POG 선정</h1>
+<div class="vote_table">
+    {% include 'modules/POG_vote.html' with team=competition.team1 %}
+    {% include 'modules/players_table.html' %}
+    {% include 'modules/POG_vote.html' with team=competition.team2 %}
+</div>
+{% endblock content %}

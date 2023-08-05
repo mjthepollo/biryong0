@@ -7,7 +7,13 @@
 {% block content %}
 {% include "modules/team_chat.html" %}
 <div class="main-content-container main-content-container-with-chat">
-    <img class="main-content" src="{% static 'images/ldn_final.png'%}">
+    {% if setting.youtube %}
+    <iframe style='aspect-ratio: 16 / 9;' width="100%" src="https://www.youtube.com/embed/C1x8qXsxsjk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    {% endif %}
+    {% if setting.twitch %}
+    <iframe src="https://player.twitch.tv/?channel=mjthepollo&parent=minbungs.site" frameborder="0" allowfullscreen="true" scrolling="no" width="100%" style='aspect-ratio: 16 / 9;'></iframe>
+    {% endif %}
+    {% comment %} <img class="main-content" src="{% static 'images/ldn_final.png'%}"> {% endcomment %}
     <div class="main-functions">
         {% if user.info_complete %}
         <a id="expect_winner" class="red-box shadow" href="" target=”_blank”>1경기 승부예측</a>

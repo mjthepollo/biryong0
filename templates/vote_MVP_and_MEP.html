@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link href="{% static 'css/vote.css' %}" rel="stylesheet" />
+{% endblock css%}
+{% block header %}
+<header>
+    <a href="{% url 'home' %}"><img class="team_logo" src="{% static 'images/team1.png' %}"></a>
+    <div class="vs">vs</div>
+    <a href="{% url 'home' %}"><img class="team_logo" src="{% static 'images/team2.png' %}"></a>
+</header>
+{% endblock header %}
+{% block content %}
+<h1>MVP/MEP 선정</h1>
+<h3>MVP(Most Valuable Player) 최고의 실력을 뽐낸 선수</h3>
+<h3>MEP(Most Entertaining Player) 최고로 경기를 재미있게 만들어준 선수</h3>
+<div class="vote_table">
+    {% include "modules/MEP_vote.html" with team=team1 %}
+    {% include "modules/MVP_vote.html" with team=team1 %}
+    <div class='player_table shadow'>
+        <div class="team1_header">{{team1.name}}</div>
+        <div class="team2_header">{{team2.name}}</div>
+        {% for player in all_players %}
+        {% if not forloop.counter|divisibleby:2 %}
+        <div class="player_info">
+            <img class="position" src="{{player.position_image_url}}">
+            <img class="tier" src="{{player.tier_image_url}}">
+            <span class="nickname">{{player.nickname}}</span>
+            <span class="name">{{player.name}}</span>
+        </div>
+        {% else %}
+        <div class="player_info">
+            <span class="name">{{player.name}}</span>
+            <span class="nickname">{{player.nickname}}</span>
+            <img class="tier" src="{{player.tier_image_url}}">
+            <img class="position" src="{{player.position_image_url}}">
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% include "modules/MVP_vote.html" with team=team2 %}
+    {% include "modules/MEP_vote.html" with team=team2 %}
+</div>
+{% endblock content %}

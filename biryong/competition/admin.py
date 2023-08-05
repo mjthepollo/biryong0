@@ -1,8 +1,13 @@
 from django.contrib import admin
 
-from biryong.competition.models import Competition, Player, Team
+from biryong.competition.models import Competition, Player, Setting, Team
 
 # Register your models here.
+
+
+@admin.register(Setting)
+class SettingAdmin(admin.ModelAdmin):
+    list_display = ('twitch', "youtube")
 
 
 @admin.register(Competition)

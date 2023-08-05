@@ -3,25 +3,41 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from biryong.competition.models import Competition, Player, Team
+from biryong.competition.models import Competition, Player, Setting, Team
 from biryong.users.forms import AdditionalInfoForm
 
 
 def home(request):
-    return render(request, "home.html")
+    setting = Setting.load()
+    return render(request, "home.html", context={"setting": setting})
 
 
 @login_required
 def team_supporters(request, number):
     team = Team.objects.get(number=number)
-    return render(request, "team_supporters.html", {"supporters": team.supporters.all(), "class": f"team{team.number}"})
+    return render(request, "team_supporters.html", context={"supporters": team.supporters.all(), "class": f"team{team.number}"})
 
 
 @login_required
 def expect_winner(request, competition_pk):
     competition = Competition.objects.get(pk=competition_pk)
     if competition.open_expect_vote:
-        return render(request, "expect_winner.html", {"competition": competition})
+        team1_expectors_count = competition.get_team1_expectors_count()
+        team2_expectors_count = competition.get_team2_expectors_count()
+        if team1_expectors_count + team2_expectors_count == 0:
+            team1_expectors_rate = 50
+            team2_expectors_rate = 50
+        else:
+            team1_expectors_rate = int(team1_expectors_count / (team1_expectors_count + team2_expectors_count) * 100)
+            team2_expectors_rate = int(team2_expectors_count / (team1_expectors_count + team2_expectors_count) * 100)
+
+        return render(request, "expect_winner.html",
+                      context={"competition": competition,
+                               "team1_expectors_count": team1_expectors_count,
+                               "team2_expectors_count": team2_expectors_count,
+                               "team1_expectors_rate": team1_expectors_rate,
+                               "team2_expectors_rate": team2_expectors_rate,
+                               })
     else:
         return redirect("home")
 
@@ -29,14 +45,9 @@ def expect_winner(request, competition_pk):
 def vote_expected_winner(request, competition_pk, team_pk):
     competition = Competition.objects.get(pk=competition_pk)
     team = Team.objects.get(pk=team_pk)
-    if team == competition.team1:
-        competition.team1_expector.add(request.user)
-        return JsonResponse({'result': 'success', 'meesage': f"{request.user.nickname}님이 {team.name}을 응원합니다."})
-    elif team == competition.team2:
-        competition.team2_expector.add(request.user)
-        return JsonResponse({'result': 'success', 'meesage': f"{request.user.nickname}님이 {team.name}을 응원합니다."})
-    else:
-        return JsonResponse({'result': 'fail', "message": "팀이 올바르지 않습니다."})
+    setattr(request.user, f"competition{competition.number}_winner_expect", team)
+    request.user.save()
+    return redirect(reverse("expect_winner", args=[competition_pk]))
 
 
 @login_required
@@ -50,50 +61,46 @@ def vote_POG(request, competition_pk):
 
 
 def vote_POG_player(request, competition_pk, player_pk):
-    try:
-        competition = Competition.objects.get(pk=competition_pk)
-        player = Player.objects.get(pk=player_pk)
-        pog_voters = getattr(player, f"competition{competition.number}_POG_voters")
-        pog_voters.add(request.user)
-        return JsonResponse({'result': 'success',
-                             'meesage': f"{request.user.nickname}님이 {str(player.name)}님을 POG로 선택하셨습니다."})
-    except Exception as e:
-        return JsonResponse({'result': 'fail', 'meesage': f"{e}"})
+    competition = Competition.objects.get(pk=competition_pk)
+    player = Player.objects.get(pk=player_pk)
+    pog_voters = getattr(player, f"competition{competition.number}_POG_voters")
+    pog_voters.add(request.user)
+    return redirect(reverse("vote_POG", args=[competition_pk]))
 
 
 @login_required
 def vote_MVP_and_MEP(request):
-    team1 = Team.objects.all()[0]
-    team2 = Team.objects.all()[1]
+    team1 = Team.get_team1()
+    team2 = Team.get_team2()
     MVP_of_user = request.user.MVP
-    MEP_of_user = request.user.MVP
+    MEP_of_user = request.user.MEP
+    team1_players = team1.players_in_order()
+    team2_players = team2.players_in_order()
+    all_players = []
+    for i in range(5):
+        all_players.append(team1_players[i])
+        all_players.append(team2_players[i])
     return render(request, "vote_MVP_and_MEP.html",
-                  {"team1": team1, "team2": team2, "MVP_of_user": MVP_of_user,
+                  {"team1": team1, "team2": team2,
+                   "all_players": all_players,
+                   "MVP_of_user": MVP_of_user,
                    "MEP_of_user": MEP_of_user})
 
 
 @login_required
 def vote_MVP_player(request, player_pk):
-    try:
-        player = Player.objects.get(pk=player_pk)
-        MVP_voters = player.MVP_voters
-        MVP_voters.add(request.user)
-        return JsonResponse({'result': 'success',
-                             'meesage': f"{request.user.nickname}님이 {str(player.name)}님을 MVP로 선택하셨습니다."})
-    except Exception as e:
-        return JsonResponse({'result': 'fail', 'meesage': f"{e}"})
+    player = Player.objects.get(pk=player_pk)
+    request.user.MVP = player
+    request.user.save()
+    return redirect(reverse("vote_MVP_and_MEP"))
 
 
 @login_required
 def vote_MEP_player(request, player_pk):
-    try:
-        player = Player.objects.get(pk=player_pk)
-        MEP_voters = player.MEP_voters
-        MEP_voters.add(request.user)
-        return JsonResponse({'result': 'success',
-                             'meesage': f"{request.user.nickname}님이 {str(player.name)}님을 MEP로 선택하셨습니다."})
-    except Exception as e:
-        return JsonResponse({'result': 'fail', 'meesage': f"{e}"})
+    player = Player.objects.get(pk=player_pk)
+    request.user.MEP = player
+    request.user.save()
+    return redirect(reverse("vote_MVP_and_MEP"))
 
 
 @login_required

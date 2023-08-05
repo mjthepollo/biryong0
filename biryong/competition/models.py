@@ -12,6 +12,24 @@ POSITION_CHOICES = (
 )
 
 
+class Setting(models.Model):
+
+    twitch = models.BooleanField(default=False)
+    youtube = models.BooleanField(default=True)
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super(Setting, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        pass
+
+    @classmethod
+    def load(cls):
+        obj, created = cls.objects.get_or_create(pk=1)
+        return obj
+
+
 class Team(models.Model):
     name = models.CharField(max_length=30)
     number = models.IntegerField(default=1)
@@ -43,6 +61,9 @@ class Team(models.Model):
     @property
     def supporter(self):
         return self.players.get(position="supporter")
+
+    def players_in_order(self):
+        return [self.top, self.jungle, self.mid, self.bottom, self.supporter]
 
     def __str__(self):
         return self.name
@@ -123,6 +144,19 @@ class Competition(models.Model):
 
     open_POG_vote = models.BooleanField(default=False)
     finish_POG_vote = models.BooleanField(default=False)
+
+    def all_players_in_order(self):
+        return [self.team1.top, self.team2.top, self.team1.jungle, self.team2.jungle,
+                self.team1.mid, self.team2.mid, self.team1.bottom, self.team2.bottom,
+                self.team1.supporter, self.team2.supporter]
+
+    def get_team1_expectors_count(self):
+        expectors = getattr(self.team1, f"competition{self.number}_expectors")
+        return expectors.count()
+
+    def get_team2_expectors_count(self):
+        expectors = getattr(self.team2, f"competition{self.number}_expectors")
+        return expectors.count()
 
     @property
     def pog_info(self):
