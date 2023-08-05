@@ -3,12 +3,14 @@ from config.settings.local import *  # noqa
 STATIC_URL = "/staticfiles/"  # TEMP!!!!!!!!!!!
 ALLOWED_HOSTS = ["*"]
 
-DEBUG = False
+DEBUG = True
 CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000",
     "http://0.0.0.0:8000",
     "https://ddshs.co.kr",
     "http://ddshs.co.kr",
+    "https://minbungs.site",
+    "http://minbungs.site",
     "http://20.39.198.155",
 
 ]
