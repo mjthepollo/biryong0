@@ -13,7 +13,7 @@ class SettingAdmin(admin.ModelAdmin):
 @admin.register(Competition)
 class CompetitionAdmin(admin.ModelAdmin):
     list_display = ('number', 'team1', 'team2', "open_expect_vote", 'finish_expect_vote',
-                    "open_POG_vote", "finish_POG_vote", )
+                    "open_POG_vote", "finish_POG_vote", "pog_info")
 
 
 @admin.register(Player)
