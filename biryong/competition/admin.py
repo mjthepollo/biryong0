@@ -20,12 +20,25 @@ def make_realtime(modeladmin, request, queryset):
     queryset.update(real_time=True)
 
 
+@admin.action(description="첫 선수를 제거함")
+def pop_first_player(modeladmin, request, queryset):
+    for competition in queryset:
+        competition.pop_first_player()
+
+
+class PlayerInline(admin.TabularInline):
+    model = Player
+    list_display = ('user', 'competition')
+
+
 @admin.register(Competition)
 class CompetitionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'number', 'joinable', 'real_time', "game_link", "discord_link")
-    actions = [make_unjoinable, make_realtime]
+    list_display = ('name', 'number', 'joinable', 'real_time',
+                    "first_player", "number_of_players")
+    actions = [make_unjoinable, make_realtime, pop_first_player]
+    inlines = [PlayerInline]
 
 
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
-    list_display = ('user', 'competition')
+    list_display = ('user', 'competition', "created")
