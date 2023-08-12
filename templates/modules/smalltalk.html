@@ -1,0 +1,11 @@
+<div class="smalltalk-container">
+    <div id="smalltalk-title">Small Talk</div>
+    <div id="user-list"></div>
+    <div id='smalltalks'></div>
+    <div id="smalltalk-input">
+        <input id="chat-message-input" type="text" size="100" placeholder="채팅을 입력해주세요!">
+        <input hidden id="chat-message-submit" type="button" value="Send">
+    </div>
+</div>
+{{ room_name|json_script:"room-name" }}
+{{ user.username|json_script:"user_id" }}

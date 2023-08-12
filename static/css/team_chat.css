@@ -1,15 +1,9 @@
 @import url("./chat.css");
-body {
-  background: transparent;
-}
-
 #team1_chat,
 #team2_chat {
   right: 0px;
 
   width: 100%;
-
-  background-color: transparent;
 }
 
 .chat-container {
@@ -41,10 +35,11 @@ body {
 }
 
 p.message {
+  max-width: 100%;
+  width: max-content;
   margin: 0px;
+  font-size: 15px;
   padding: 0px;
-
-  color: white;
   background: transparent;
-  text-shadow: 1px 1px 2px black;
+  text-shadow: 1px 1px 2px white;
 }

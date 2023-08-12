@@ -5,7 +5,6 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from django.utils.html import escape
 
-from biryong.competition.models import Team
 from biryong.smalltalk.models import SmallTalk
 from biryong.users.models import User
 
@@ -150,18 +149,7 @@ class TwitchChatConsumer(WebsocketConsumer):
         if user:
             message = escape(text_data_json["message"])
             talk = get_talk(user, message)
-            if user.support_team == Team.get_team1():
-                async_to_sync(self.channel_layer.group_send)(
-                    "team1", {"type": "chat_message", "talk": talk}
-                )
-                print('TEAM1')
-            elif user.support_team == Team.get_team2():
-                async_to_sync(self.channel_layer.group_send)(
-                    "team2", {"type": "chat_message", "talk": talk}
-                )
-                print('TEAM2')
-            else:
-                print('WTF?!')
+            async_to_sync(self.channel_layer.group_send)({"type": "chat_message", "talk": talk})
 
     # Receive message from room group
     def chat_message(self, event):

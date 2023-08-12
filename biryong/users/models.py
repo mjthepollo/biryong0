@@ -4,8 +4,6 @@ from django.db.models import CharField, EmailField, URLField
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from biryong.competition.models import Player, Team
-
 
 class User(AbstractUser):
     """
@@ -24,29 +22,6 @@ class User(AbstractUser):
     profile_image_url = URLField(max_length=200, null=True, blank=True)
     thumbnail_image_url = URLField(max_length=200, null=True, blank=True)
 
-    support_team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True, related_name="supporters")
-    cheer_message = models.TextField(blank=True, null=True)
-    twitch_id = models.CharField(max_length=50, blank=True, null=True)
-    info_complete = models.BooleanField(default=False)
-
-    competition1_winner_expect = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True,
-                                                   blank=True, related_name="competition1_expectors")
-    competition2_winner_expect = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True,
-                                                   blank=True, related_name="competition2_expectors")
-    competition3_winner_expect = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True,
-                                                   blank=True, related_name="competition3_expectors")
-
-    competition1_POG = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True,
-                                         blank=True, related_name="competition1_POG_voters")
-    competition2_POG = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True,
-                                         blank=True, related_name="competition2_POG_voters")
-    competition3_POG = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True,
-                                         blank=True, related_name="competition3_POG_voters")
-    MVP = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True,
-                            blank=True, related_name="MVP_voters")
-    MEP = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True,
-                            blank=True, related_name="MEP_voters")
-
     def get_absolute_url(self) -> str:
         """Get URL for user's detail view.
         Returns:
@@ -55,8 +30,5 @@ class User(AbstractUser):
         """
         return reverse("users:detail", kwargs={"pk": self.id})
 
-    def is_team1_supporter(self):
-        return self.support_team == Team.objects.get(number=1)
-
-    def is_team2_supporter(self):
-        return self.support_team == Team.objects.get(number=2)
+    def __str__(self):
+        return self.nickname

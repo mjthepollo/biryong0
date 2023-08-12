@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from biryong.competition.models import Competition, Player, Setting, Team
+from biryong.competition.models import Competition, Player, Setting
 
 # Register your models here.
 
@@ -10,17 +10,22 @@ class SettingAdmin(admin.ModelAdmin):
     list_display = ('twitch', "youtube")
 
 
+@admin.action(description="참가 불가능으로 만듦")
+def make_unjoinable(modeladmin, request, queryset):
+    queryset.update(joinable=False)
+
+
+@admin.action(description="실시간으로 만듦")
+def make_realtime(modeladmin, request, queryset):
+    queryset.update(real_time=True)
+
+
 @admin.register(Competition)
 class CompetitionAdmin(admin.ModelAdmin):
-    list_display = ('number', 'team1', 'team2', "open_expect_vote", 'finish_expect_vote',
-                    "open_POG_vote", "finish_POG_vote", "pog_info")
+    list_display = ('name', 'number', 'joinable', 'real_time', "game_link", "youtube_link")
+    actions = [make_unjoinable, make_realtime]
 
 
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
-    list_display = ('team', 'name', 'nickname', "position", "tier")
-
-
-@admin.register(Team)
-class TeamAdmin(admin.ModelAdmin):
-    list_display = ('name', "number")
+    list_display = ('user', 'competition')
