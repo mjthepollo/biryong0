@@ -1,8 +1,19 @@
+import random
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models import CharField, EmailField, URLField
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+
+COLOR_CHOICES = (
+    ("#FF0000", "빨강"),
+    ("#FCEE21", "노랑"),
+    ("#39B54A", "초록"),
+    ("#29ABE2", "파랑"),
+    ("#000000", "검정"),
+
+)
 
 
 class User(AbstractUser):
@@ -21,6 +32,12 @@ class User(AbstractUser):
     kakao_id = CharField(max_length=50)
     profile_image_url = URLField(max_length=200, null=True, blank=True)
     thumbnail_image_url = URLField(max_length=200, null=True, blank=True)
+
+    chat_name_color = CharField(max_length=10, choices=COLOR_CHOICES, default="#000000")
+
+    def set_random_chat_name_color(self):
+        self.chat_name_color = random.choice(COLOR_CHOICES)[0]
+        self.save()
 
     def get_absolute_url(self) -> str:
         """Get URL for user's detail view.

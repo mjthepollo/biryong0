@@ -11,6 +11,7 @@ class Setting(models.Model):
 
     twitch = models.BooleanField(default=False)
     youtube = models.BooleanField(default=True)
+    broad_cast_name = models.CharField(max_length=100, default="운동회가 망하지 않게 하기위해 무한 전화를 거는 김민준")
 
     def save(self, *args, **kwargs):
         self.pk = 1
@@ -31,12 +32,13 @@ class Competition(models.Model):
 
     name = models.CharField(default="경기명 설정이 필요합니다.", max_length=200, verbose_name="경기명")
     number = models.IntegerField(default=0)
+    time_string = models.CharField(default="시간 설정이 필요합니다.", max_length=30)
     joinable = models.BooleanField(default=False, verbose_name="참가 가능")
     real_time = models.BooleanField(default=False, verbose_name="실시간")
     description = models.TextField(default="설명이 필요합니다.", verbose_name="설명")
 
     game_link = models.URLField(blank=True, null=True, verbose_name="게임 링크")
-    youtube_link = models.URLField(blank=True, null=True, verbose_name="유튜브 링크")
+    discord_link = models.URLField(blank=True, null=True, verbose_name="디스코드 링크")
 
     @classmethod
     def get_real_time_competition(cls):

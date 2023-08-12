@@ -22,7 +22,7 @@ def make_realtime(modeladmin, request, queryset):
 
 @admin.register(Competition)
 class CompetitionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'number', 'joinable', 'real_time', "game_link", "youtube_link")
+    list_display = ('name', 'number', 'joinable', 'real_time', "game_link", "discord_link")
     actions = [make_unjoinable, make_realtime]
 
 
