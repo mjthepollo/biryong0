@@ -33,7 +33,7 @@ class PlayerInline(admin.TabularInline):
 
 @admin.register(Competition)
 class CompetitionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'number', 'joinable', 'real_time',
+    list_display = ('name', "time_string", 'number', 'joinable', 'real_time',
                     "first_player", "number_of_active_players")
     actions = [make_unjoinable, make_realtime, pop_first_active_player]
     inlines = [PlayerInline]
