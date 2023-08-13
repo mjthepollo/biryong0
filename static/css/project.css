@@ -1,5 +1,5 @@
 @font-face {
-  font-family: "Pretendard-Thin";
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 100;
 
@@ -7,7 +7,7 @@
     format("woff");
 }
 @font-face {
-  font-family: "Pretendard-ExtraLight";
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 200;
 
@@ -15,7 +15,7 @@
     format("woff");
 }
 @font-face {
-  font-family: "Pretendard-Light";
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 300;
 
@@ -23,7 +23,7 @@
     format("woff");
 }
 @font-face {
-  font-family: "Pretendard-Regular";
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 400;
 
@@ -31,7 +31,7 @@
     format("woff");
 }
 @font-face {
-  font-family: "Pretendard-Medium";
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 500;
 
@@ -39,7 +39,7 @@
     format("woff");
 }
 @font-face {
-  font-family: "Pretendard-SemiBold";
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 600;
 
@@ -47,7 +47,7 @@
     format("woff");
 }
 @font-face {
-  font-family: "Pretendard-Bold";
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 700;
 
@@ -55,7 +55,7 @@
     format("woff");
 }
 @font-face {
-  font-family: "Pretendard-ExtraBold";
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 800;
 
@@ -63,7 +63,7 @@
     format("woff");
 }
 @font-face {
-  font-family: "Pretendard-Black";
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 900;
 
