@@ -29,6 +29,17 @@
   font-size: 28px;
   line-height: 1.4;
 }
+
+.additional_link {
+  display: flex;
+  align-items: center;
+
+  margin-top: 15px;
+}
+.additional_link img {
+  height: 30px;
+  margin-right: 10px;
+}
 .match-participant {
 }
 .match-participant__title {

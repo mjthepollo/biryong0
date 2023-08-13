@@ -21,6 +21,12 @@
     </div>
     <div class="match-content">
       {{competition.description|linebreaksbr}}
+      {% if competition.discord_link %}
+      <a class="additional_link" href="{{competition.discord_link}}" target="_blank"><img src="{% static 'images/discord.svg' %}">{{competition.discord_link}}</a>
+      {% endif %}
+      {% if competition.game_link%}
+      <a class="additional_link" href="{{competition.game_link}}" target="_blank"><img src="{% static 'images/game.png' %}">{{competition.game_link}}</a>
+      {% endif %}
     </div>
     <div class="match-participant">
       {% if competition.joinable %}
