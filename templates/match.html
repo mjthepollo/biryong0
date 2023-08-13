@@ -1,0 +1,34 @@
+{% extends "base_with_banner.html" %}
+{% load static %}
+{% block title %}{{competition.name}}{% endblock title %}
+{% block css %}
+<link href="{% static 'css/match.css' %}" rel="stylesheet" />
+{% endblock css%}
+{% block content %}
+  <div class="container match-container">
+    <div class="match-header">
+      <div class="match-header__left">
+        <div class="match-header__time">{{competition.time_string}}</div>
+        <div class="match-header__title">{{competition.name}}</div>
+      </div>
+      {% if user.is_authenticated %}
+      <button class="match-header__button green_button" onclick="window.location='{% url 'competition:join_match_redirect' competition.pk %}'">참가 신청하기</button>
+      {% else %}
+      <button class="match-header__button yellow_button" onclick="window.location='{% url 'login' %}'">참가 신청하기(로그인)</button>
+      {% endif %}
+    </div>
+    <div class="match-content">
+      {{competition.description|linebreaksbr}}
+    </div>
+    <div class="match-participant">
+      <div class="match-participant__title">참가하는 사람</div>
+      <div class="match-participant__people">
+        {% for player in competition.players.all %}
+        <img class="match-participant__people__image" src="{{player.user.thumbnail_image_url}}"/>
+        {% endfor %}
+      </div>
+      <!-- <button class="match-participant__button">참가 신청하기</button> -->
+    </div>
+  </div>
+{% endblock content%}
+</html>

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link href="{% static 'css/real_time.css' %}" rel="stylesheet" />
+{% endblock css%}
+{% block content %}
+<div class="broadcast-top">
+  <div class="broadcast-top__left">
+    <span class="broadcast-top__left__time">{{ real_time_competition.time_string }}</span>
+    <span class="broadcast-top__left__name">{{ real_time_competition.name }}</span>
+    <span class="broadcast-top__left__real_time">• 실시간</span>
+  </div>
+  <div class="broadcast-top__right">
+    <button class="broadcast-top__right__function gray_button" onclick="window.location='{% url 'home' %}'">시간표</button>
+    <button id="match_info" class="broadcast-top__right__function yellow_button">경기 설명</button>
+    {% if user.is_authenticated %}
+    <button id="join_match" class="broadcast-top__right__function green_button">경기 참가</button>
+    {% else %}
+    <button class="broadcast-top__right__function green_button" onclick="window.location='{% url 'login' %}'">로그인</button>
+    {% endif %}
+  </div>
+</div>
+<div class="broadcast-main">
+  <div class="broadcast-box">
+    <iframe id="streaming" src="https://www.youtube.com/embed/mAi6swavhp0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div class="chat-container">
+    <div id='chats'>
+    </div>
+    <div id="chat-input">
+      {% if user.is_authenticated %}
+      <input id="chat-message-input" type="text" size="100" placeholder="채팅을 입력해주세요!">
+      {% else %}
+      <input id="chat-message-input" type="text" size="100" placeholder="로그인을 해주세요!" disabled>
+      {% endif %}
+      <button id="chat-message-sumbit" type="button"><img src="{% static 'images/arrow_up.svg' %}"></button>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block inline_javascript %}
+<script type="module" src="{% static 'js/resize_iframe.js' %}"></script>
+<script type="module" src="{% static 'js/real_time_link.js' %}"></script>
+<script type="module" src="{% static 'js/olympic_chat.js' %}"></script>
+{% endblock inline_javascript %}

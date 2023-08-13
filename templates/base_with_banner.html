@@ -22,6 +22,7 @@
         crossorigin="anonymous"
         referrerpolicy="no-referrer" />
   <link href="{% static 'css/project.css' %}" rel="stylesheet" />
+  <link href="{% static 'css/banner.css' %}" rel="stylesheet" />
   {% block css %}
   {% endblock css %}
   <script>
@@ -46,9 +47,9 @@
   {% endblock javascript %}
 </head>
 <body>
-    <a id="banner"><span id="banner__content">피카츄 배구 실시간 보러가기</span><span id="banner__click">Click!</span></a>
+  <a id="banner" href="{% url 'competition:real_time' %}"><span id="banner__content">실시간 보러가기</span><span id="banner__click">Click!</span></a>
   {% block header %}
-  <header><a href = "{% url 'home' %}"><img src="{% static 'images/oplympic_rings.svg' %}"/></header>
+  <header><a href = "{% url 'home' %}"><img class="olympic-logo" src="{% static 'images/olympic_rings.svg' %}"/></a></header>
   {% endblock header %}
   {% block content %}
   {% endblock content %}

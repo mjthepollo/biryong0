@@ -1,48 +1,205 @@
-:root {
-  --red: #fc0202;
-  --dark-red: #710000;
-  --blue: #0293fc;
-  --dark-blue: #4200ff;
-  --purple: #f702fc;
-  --dark-purple: #8f00ff;
-  --gray: #d9d9d9;
-  --kakao-yellow: #fefe06;
-  --kakao-dark-yellow: #f7e10c;
-  --kakao-brown: #391c1b;
-}
-
 @font-face {
-  font-family: "Pretendard";
+  font-family: "Pretendard-Thin";
+  font-style: normal;
+  font-weight: 100;
+
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Thin.woff")
+    format("woff");
+}
+@font-face {
+  font-family: "Pretendard-ExtraLight";
+  font-style: normal;
+  font-weight: 200;
+
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraLight.woff")
+    format("woff");
+}
+@font-face {
+  font-family: "Pretendard-Light";
+  font-style: normal;
+  font-weight: 300;
+
   src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Light.woff")
     format("woff");
-  font-weight: 300;
-  font-style: normal;
 }
 @font-face {
-  font-family: "Pretendard";
+  font-family: "Pretendard-Regular";
+  font-style: normal;
+  font-weight: 400;
+
   src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
     format("woff");
-  font-weight: 400;
-  font-style: normal;
 }
 @font-face {
-  font-family: "Pretendard";
+  font-family: "Pretendard-Medium";
+  font-style: normal;
+  font-weight: 500;
+
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff")
+    format("woff");
+}
+@font-face {
+  font-family: "Pretendard-SemiBold";
+  font-style: normal;
+  font-weight: 600;
+
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff")
+    format("woff");
+}
+@font-face {
+  font-family: "Pretendard-Bold";
+  font-style: normal;
+  font-weight: 700;
+
   src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff")
     format("woff");
-  font-weight: 700;
+}
+@font-face {
+  font-family: "Pretendard-ExtraBold";
   font-style: normal;
+  font-weight: 800;
+
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraBold.woff")
+    format("woff");
+}
+@font-face {
+  font-family: "Pretendard-Black";
+  font-style: normal;
+  font-weight: 900;
+
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Black.woff")
+    format("woff");
 }
 
-.shadow {
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.5);
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+
+  font-size: 100%;
+
+  border: 0;
+
+  color: unset;
+
+  font: inherit;
+  vertical-align: baseline;
+  text-decoration: none;
 }
 
-.hansans {
-  font-family: "Black Han Sans", sans-serif;
-}
+a:hover {
+  color: unset;
 
-.notosans {
-  font-family: "Noto Sans KR", sans-serif;
+  text-decoration: none;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+body {
+  font-family: Pretendard;
 }
 
 body {
@@ -63,31 +220,41 @@ header {
   justify-content: center;
   align-items: center;
 
-  height: 170px;
+  height: 280px;
 }
 
-.main-content-container {
-  width: 100vw;
+.olympic-logo {
+  width: 181px;
 }
 
-.main-content-container-with-chat {
-  width: calc(var(--vw) * 100 - 660px);
+button {
+  border-radius: 10px;
+  height: 53px;
+
+  font-weight: 700;
+  font-size: 22px;
+
+  border: none;
+
+  color: #fff;
+  background-color: #000;
 }
 
-.main-content {
-  width: 100%;
+.yellow_button {
+  color: #000;
+  background: #fcee21;
 }
 
-.alert-debug {
-  color: black;
-  background-color: white;
-
-  border-color: #d6e9c6;
+.green_button {
+  color: #fff;
+  background: rgba(57, 181, 74, 0.79);
 }
 
-.alert-error {
-  color: #b94a48;
-  background-color: #f2dede;
+.gray_button {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.56);
+}
 
-  border-color: #eed3d7;
+.container {
+  display: block;
 }

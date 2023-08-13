@@ -13,7 +13,7 @@ from config.views import get_real_time_info_json, home, team1_chat, team2_chat, 
 
 urlpatterns = [
     path("", home, name="home"),
-    path("get_real_time_info_json", get_real_time_info_json, name="get_real_time_info_json"),
+    path("get_real_time_info_json/", get_real_time_info_json, name="get_real_time_info_json"),
     path("twitch_chat/", twitch_chat, name="twitch_chat"),
 
     path('team1_chat/', team1_chat, name='team1_chat'),
@@ -27,6 +27,7 @@ urlpatterns = [
     path("users/", include("biryong.users.urls", namespace="users")),
 
     path("smalltalk/", include("biryong.smalltalk.urls", namespace="smalltalk")),
+    path("competition/", include("biryong.competition.urls", namespace="competition")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + [
     re_path(r'^staticfiles/(?P<path>.*)$', serve, {
             'document_root': settings.STATIC_ROOT,

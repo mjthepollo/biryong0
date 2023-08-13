@@ -4,8 +4,7 @@ const websocketProtocol =
 function createLine(talk) {
   const newTalk = document.createElement("div");
   newTalk.classList.add("chat-line");
-  newTalk.innerHTML = `<div class="chat-line__left"><span class='nickname'>${talk.nickname}</span></div>
-                          <div class="chat-line__right"><p class='message'>${talk.message}</p></div>`;
+  newTalk.innerHTML = `<span class="nickname" style="color:${talk.chat_name_color};">${talk.nickname}</span>${talk.message}</div>`;
   return newTalk;
 }
 

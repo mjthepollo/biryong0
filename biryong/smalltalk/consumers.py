@@ -10,7 +10,7 @@ from biryong.users.models import User
 
 
 def get_talk(user, message):
-    return {"user_id": user.username, "nickname": user.nickname,
+    return {"user_id": user.username, "nickname": user.nickname, "chat_name_color": user.chat_name_color,
             "thumbnail_image_url": user.thumbnail_image_url, "message": message, }
 
 
@@ -89,10 +89,13 @@ class ChatConsumer(WebsocketConsumer):
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
         self.room_group_name = self.room_name
         # Join room group
+        user = self.scope["user"]
+        if user.is_authenticated:
+            user.set_random_chat_name_color()
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name, self.channel_name
         )
-
+        print(self.room_group_name)
         self.accept()
 
     def disconnect(self, close_code):
@@ -109,7 +112,7 @@ class ChatConsumer(WebsocketConsumer):
         if data_type == "message":
             message = escape(text_data_json["content"])
             talk = get_talk(user, message)
-            # Send message to room group
+            print(message)
             async_to_sync(self.channel_layer.group_send)(
                 self.room_group_name, {"type": "chat_message", "talk": talk}
             )

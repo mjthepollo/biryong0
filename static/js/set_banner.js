@@ -1,17 +1,17 @@
 const banner = document.querySelector("#banner");
 const bannerContent = document.querySelector("#banner__content");
 const bannerClick = document.querySelector("#banner__click");
-const getBannerInfo = "/get_expect_winner_url/";
+const getRealTimeInfoUrl = "/get_real_time_info_json/";
 
 function setBanner() {
-  fetch(getBannerInfo)
+  fetch(getRealTimeInfoUrl)
     .then((data) => {
       return data.json();
     })
     .then((data) => {
-      banner.href = data["banner_href"];
-      bannerContent.innerHTML = data["banner_content"];
+      bannerContent.innerHTML = data["name"] + " 실시간 보러가기";
     });
 }
 
+setBanner();
 setInterval(setBanner, 10000);

@@ -1,18 +1,26 @@
-{% extends "base.html" %}
+{% extends "base_with_banner.html" %}
 {% load static %}
 {% block css %}
-<link href="{% static 'css/chat.css' %}" rel="stylesheet" />
 <link href="{% static 'css/home.css' %}" rel="stylesheet" />
 {% endblock css%}
 {% block content %}
-{% include "modules/team_chat.html" %}
 <div class="main-content-container">
-    {% if setting.youtube %}
-    <iframe style='aspect-ratio: 16 / 9;' width="100%" src="https://www.youtube.com/embed/C1x8qXsxsjk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-    {% endif %}
-    {% if setting.twitch %}
-    <iframe src="https://player.twitch.tv/?channel=mjthepollo&parent=minbungs.site" frameborder="0" allowfullscreen="true" scrolling="no" width="100%" style='aspect-ratio: 16 / 9;'></iframe>
-    {% endif %}
+    <div class="container timetable-container">
+        <ul class="timetable-content">
+            {% for competition in competitions %}
+            <li class="timetable-content__li">
+                <span class="timetable-content__li__time">{{competition.time_string}}</span>
+                <div class="timetable-content__li__title">{{competition.name}}</div>
+                <div class="timetable-content__li__actions">
+                <button {% if competition.joinable %} class="participate-match" {% else %} class="match-results" {% endif %} onclick="window.location='{% url 'competition:match' competition.pk %}'">경기 참가하기</button>
+                {% if competition.real_time %}
+                <button class="live-broadcast" onclick="window.location='{% url 'competition:real_time' %}'">• 실시간</button>
+                {% endif %}
+            </div>
+          </li>
+        {% endfor %}
+        </ul>
+      </div>
 </div>
 {% endblock content %}
 {% block inline_javascript %}

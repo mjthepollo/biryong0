@@ -28,7 +28,7 @@ class Setting(models.Model):
 
 class Competition(models.Model):
     class Meta:
-        ordering = ['-number']
+        ordering = ['number']  # number에 대한 오른차숨
 
     name = models.CharField(default="경기명 설정이 필요합니다.", max_length=200, verbose_name="경기명")
     number = models.IntegerField(default=0)

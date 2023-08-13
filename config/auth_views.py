@@ -78,10 +78,7 @@ def kakao_redirect(request):
         user.thumbnail_image_url = thumbnail_image_url
         user.save()
         login_user(request, user)
-        if user.info_complete:
-            return redirect(reverse("home"))
-        else:
-            return redirect(reverse("set_additional_info"))
+        return redirect(reverse("home"))
     else:
         random_password = User.objects.make_random_password()
         user = User.objects.create_user(
