@@ -87,7 +87,7 @@ def kakao_redirect(request):
             kakao_id=kakao_id,
             profile_image_url=profile_image_url, thumbnail_image_url=thumbnail_image_url)
         login_user(request, user)
-        return redirect(reverse("set_additional_info"))
+        return redirect(reverse("home"))
 
 
 @login_required
