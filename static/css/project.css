@@ -255,6 +255,11 @@ button {
   background: rgba(0, 0, 0, 0.56);
 }
 
+.purple_button {
+  color: #fff;
+  background: #7289da;
+}
+
 .container {
   display: block;
 }
