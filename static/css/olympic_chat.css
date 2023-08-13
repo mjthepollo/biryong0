@@ -37,18 +37,18 @@ body {
 
   box-sizing: border-box;
   width: 100%;
-  padding: 5px 0px;
+  padding: 10px 0px;
 
   line-height: 130%;
 
-  text-shadow: 0px 0px 2px #fff;
+  text-shadow: 0px 0px 4px #fff;
 }
 
 .nickname {
-  margin-right: 5px;
+  margin-right: 10px;
 
   font-weight: bold;
-  font-size: 16px;
+  font-size: 32px;
 
   color: #f00;
 
