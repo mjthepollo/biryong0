@@ -1,0 +1,57 @@
+body {
+  height: 100vh;
+
+  background: transparent;
+}
+
+.chat-container {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  background: transparent;
+}
+
+#chats {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+
+  box-sizing: border-box;
+  padding: 10px 10px;
+
+  background-color: transparent;
+
+  overflow-y: scroll;
+}
+
+#chats::-webkit-scrollbar {
+  display: none;
+}
+
+.chat-line {
+  display: inline-block;
+
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px 0px;
+
+  line-height: 130%;
+
+  text-shadow: 0px 0px 2px #fff;
+}
+
+.nickname {
+  margin-right: 5px;
+
+  font-weight: bold;
+  font-size: 16px;
+
+  color: #f00;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

@@ -9,15 +9,14 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
 
 from config.auth_views import login, logout
-from config.views import get_real_time_info_json, home, team1_chat, team2_chat, twitch_chat
+from config.views import get_real_time_info_json, home, olympic_chat, twitch_chat
 
 urlpatterns = [
     path("", home, name="home"),
     path("get_real_time_info_json/", get_real_time_info_json, name="get_real_time_info_json"),
     path("twitch_chat/", twitch_chat, name="twitch_chat"),
 
-    path('team1_chat/', team1_chat, name='team1_chat'),
-    path('team2_chat/', team2_chat, name='team2_chat'),
+    path('olympic_chat/', olympic_chat, name='olympic_chat'),
     path('twitch_chat/', twitch_chat, name='twitch_chat'),
 
     path("login/", login, name="login"),

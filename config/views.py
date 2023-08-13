@@ -37,8 +37,8 @@ def twitch_chat(request):
     return render(request, "twitch_chat.html")
 
 
-def team1_chat(request):
-    return render(request, "team1_chat.html")
+def olympic_chat(request):
+    return render(request, "olympic_chat.html")
 
 
 def team2_chat(request):

@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="{% static 'css/project.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/olympic_chat.css' %}" rel="stylesheet" />
+    <title>Olympic Chat</title>
+  </head>
+  <body>
+    <div class="chat-container">
+        <div id='chats'>
+        </div>
+      </div>
+  </body>
+  <script type='module' src="{% static 'js/olympic_chat.js' %}"></script>
+</html>
