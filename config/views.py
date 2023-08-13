@@ -41,5 +41,5 @@ def olympic_chat(request):
     return render(request, "olympic_chat.html")
 
 
-def team2_chat(request):
-    return render(request, "team2_chat.html")
+def quiz(request):
+    return render(request, "quiz.html")
