@@ -58,8 +58,9 @@ class Competition(models.Model):
 
     def pop_first_active_player(self):
         first_player = self.active_players.first()
-        first_player.active = False
-        first_player.save()
+        if first_player:
+            first_player.active = False
+            first_player.save()
         return first_player
 
     def __str__(self):
