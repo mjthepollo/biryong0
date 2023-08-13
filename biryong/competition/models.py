@@ -46,16 +46,21 @@ class Competition(models.Model):
 
     @property
     def first_player(self):
-        return self.players.first()
+        return self.active_players.first()
 
     @property
-    def number_of_players(self):
-        return self.players.count()
+    def active_players(self):
+        return self.players.filter(active=True)
 
-    def pop_first_player(self):
-        first_player = self.players.first()
-        first_player.delete()
-        return self.players.first()
+    @property
+    def number_of_active_players(self):
+        return self.active_players.count()
+
+    def pop_first_active_player(self):
+        first_player = self.active_players.first()
+        first_player.active = False
+        first_player.save()
+        return first_player
 
     def __str__(self):
         return f"{self.name}"
@@ -68,6 +73,8 @@ class Player(TimeStampedModel):
                                     verbose_name="경기", related_name="players", null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="유저",
                              related_name="players", null=True, blank=True)
+
+    active = models.BooleanField(default=True, verbose_name="활성화")
 
     def __str__(self):
         return f"{self.user}"

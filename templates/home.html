@@ -12,7 +12,11 @@
                 <span class="timetable-content__li__time">{{competition.time_string}}</span>
                 <div class="timetable-content__li__title">{{competition.name}}</div>
                 <div class="timetable-content__li__actions">
-                <button {% if competition.joinable %} class="participate-match" {% else %} class="match-results" {% endif %} onclick="window.location='{% url 'competition:match' competition.pk %}'">경기 참가하기</button>
+                {% if competition.joinable %}
+                <button class="participate-match" onclick="window.location='{% url 'competition:match' competition.pk %}'">경기 참가하기</button>
+                {% else %}
+                <button class="match-results" onclick="window.location='{% url 'competition:match' competition.pk %}'">결과 보러가기</button>
+                {% endif %}
                 {% if competition.real_time %}
                 <button class="live-broadcast" onclick="window.location='{% url 'competition:real_time' %}'">• 실시간</button>
                 {% endif %}

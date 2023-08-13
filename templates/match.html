@@ -12,7 +12,9 @@
         <div class="match-header__title">{{competition.name}}</div>
       </div>
       {% if user.is_authenticated %}
-      <button class="match-header__button green_button" onclick="window.location='{% url 'competition:join_match_redirect' competition.pk %}'">참가 신청하기</button>
+        {% if competition.joinable %}
+          <button class="match-header__button green_button" onclick="window.location='{% url 'competition:join_match_redirect' competition.pk %}'">참가 신청하기</button>
+        {% endif %}
       {% else %}
       <button class="match-header__button yellow_button" onclick="window.location='{% url 'login' %}'">참가 신청하기(로그인)</button>
       {% endif %}
@@ -21,12 +23,21 @@
       {{competition.description|linebreaksbr}}
     </div>
     <div class="match-participant">
+      {% if competition.joinable %}
       <div class="match-participant__title">참가하는 사람</div>
+      <div class="match-participant__people">
+        {% for player in competition.active_players %}
+        <img class="match-participant__people__image" src="{{player.user.thumbnail_image_url}}"/>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="match-participant__title">참가한 사람</div>
       <div class="match-participant__people">
         {% for player in competition.players.all %}
         <img class="match-participant__people__image" src="{{player.user.thumbnail_image_url}}"/>
         {% endfor %}
       </div>
+      {% endif %}
       <!-- <button class="match-participant__button">참가 신청하기</button> -->
     </div>
   </div>

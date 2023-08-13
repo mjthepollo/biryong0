@@ -21,8 +21,8 @@ def match(request, pk):
 def join_match_redirect(request, pk):
     user = request.user
     competition = Competition.objects.get(pk=pk)
-    if not Player.objects.filter(user=user, competition=competition).exists():
-        Player.objects.create(user=user, competition=competition)
+    if not Player.objects.filter(user=user, competition=competition, active=True).exists():
+        Player.objects.create(user=user, competition=competition, active=True)
     return redirect(reverse('competition:match', kwargs={'pk': pk}))
 
 
@@ -32,8 +32,8 @@ def join_match_fetch(request, pk):
         user = request.user
         competition = Competition.objects.get(pk=pk)
         print(user, competition)
-        if not Player.objects.filter(user=user, competition=competition).exists():
-            Player.objects.create(user=user, competition=competition)
+        if not Player.objects.filter(user=user, competition=competition, active=True).exists():
+            Player.objects.create(user=user, competition=competition, active=True)
             return JsonResponse({'success': True, "message": "참가 완료"})
         else:
             return JsonResponse({'success': True, "message": "이미 있음"})
