@@ -27,7 +27,7 @@ urlpatterns = [
 
     path('olympic_chat/', olympic_chat, name='olympic_chat'),
     path('twitch_chat/', twitch_chat, name='twitch_chat'),
-    path("quiz/", include("quiz.urls", namespace="quiz")),
+    path("quiz/", include("biryong.quiz.urls", namespace="quiz")),
 
     path("login/", login, name="login"),
     path("logout/", logout, name="logout"),
