@@ -31,7 +31,6 @@ def join_match_fetch(request, pk):
     try:
         user = request.user
         competition = Competition.objects.get(pk=pk)
-        print(user, competition)
         if not Player.objects.filter(user=user, competition=competition, active=True).exists():
             Player.objects.create(user=user, competition=competition, active=True)
             return JsonResponse({'success': True, "message": "참가 완료"})

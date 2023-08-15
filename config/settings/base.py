@@ -90,6 +90,7 @@ LOCAL_APPS = [
     "biryong.competition.apps.CompetitionConfig",
     "biryong.smalltalk.apps.SmalltalkConfig",
     "biryong.post_it.apps.PostItConfig",
+    "biryong.quiz.apps.QuizConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

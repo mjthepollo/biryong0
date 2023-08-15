@@ -33,13 +33,40 @@ def get_real_time_info_json(request):
     return JsonResponse(return_json)
 
 
+def joining_players(request):
+    real_time_competition = Competition.get_real_time_competition()
+    joining_players = real_time_competition.active_players.all() if real_time_competition else []
+    if joining_players.count() > 5:
+        over_five = True
+        over_five_text = F"+{(joining_players.count()-5)}"
+    else:
+        over_five = False
+        over_five_text = ""
+    context = {
+        "joining_players": joining_players, "over_five": over_five, "over_five_text": over_five_text}
+    return render(request, "joining_players.html", context=context)
+
+
+def joining_players_json(request):
+    real_time_competition = Competition.get_real_time_competition()
+    joining_players = real_time_competition.active_players.all() if real_time_competition else []
+    if joining_players.count() > 5:
+        over_five = True
+        over_five_text = F"+{(joining_players.count()-5)}"
+    else:
+        over_five = False
+        over_five_text = ""
+    joining_players_info = [
+        {"thumbnail_image_url": player.user.thumbnail_image_url,
+         "nickname": player.user.nickname} for player in joining_players[:5]]
+    context = {
+        "joining_players_info": joining_players_info, "over_five": over_five, "over_five_text": over_five_text}
+    return JsonResponse(context)
+
+
 def twitch_chat(request):
     return render(request, "twitch_chat.html")
 
 
 def olympic_chat(request):
     return render(request, "olympic_chat.html")
-
-
-def quiz(request):
-    return render(request, "quiz.html")

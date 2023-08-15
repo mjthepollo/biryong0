@@ -12,6 +12,7 @@ class Setting(models.Model):
     twitch = models.BooleanField(default=False)
     youtube = models.BooleanField(default=True)
     broad_cast_name = models.CharField(max_length=100, default="운동회가 망하지 않게 하기위해 무한 전화를 거는 김민준")
+    iframe_tag = models.TextField(default="설정필요")
 
     def save(self, *args, **kwargs):
         self.pk = 1

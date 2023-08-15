@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="{% static 'css/project.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/joining_players.css' %}" rel="stylesheet" />
+    <title>Joining Players</title>
+  </head>
+  <body>
+    <div class="joining_players">
+        {% for player in joining_players %}
+        <div class="joining_player">
+            <img src="{{player.user.thumbnail_image_url}}">
+            <span>{{player.user.nickname}}</span>
+        </div>
+        {% endfor %}
+        {% if over_five %}
+        <div class="over_five">{{over_five_text}}</div>
+        {% endif %}
+    </div>
+  </body>
+  <script type='module' src="{% static 'js/joining_players.js' %}"></script>
+</html>

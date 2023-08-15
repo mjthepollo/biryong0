@@ -35,6 +35,14 @@ class User(AbstractUser):
 
     chat_name_color = CharField(max_length=10, choices=COLOR_CHOICES, default="#000000")
 
+    join_quiz = models.BooleanField(default=False)
+    solved_point = models.IntegerField(default=0)
+
+    def set_solved_point(self):
+        self.solved_point = sum([quiz.point for quiz in self.solved_quizs.all()])
+        self.save()
+        return self.solved_point
+
     def set_random_chat_name_color(self):
         self.chat_name_color = random.choice(COLOR_CHOICES)[0]
         self.save()
