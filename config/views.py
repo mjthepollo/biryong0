@@ -35,7 +35,7 @@ def get_real_time_info_json(request):
 
 def joining_players(request):
     real_time_competition = Competition.get_real_time_competition()
-    joining_players = real_time_competition.active_players.all() if real_time_competition else []
+    joining_players = real_time_competition.active_players.all() if real_time_competition else Player.objects.none()
     if joining_players.count() > 5:
         over_five = True
         over_five_text = F"+{(joining_players.count()-5)}"
