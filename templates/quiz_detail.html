@@ -9,13 +9,21 @@
     <title>QUIZ DETAIL</title>
   </head>
   <body>
-    <h1>문제 {{quiz.name}}</h1>
-    <h2>{{quiz.genre}}</h1>
-    <h3>{{quiz.point}}</h1>
+    <a href="{% url 'quiz:list' %}"><h1>QUIZ LIST</h1></a>
+    <form method="POST">
+        {% csrf_token %}
+        {{solve_form.as_div}}
+        <button >확인</button>
+    </form>
+    <h1>문제 {{quiz.name}} [{{quiz.genre}}] ({{quiz.point}})</h1>
     <p>{{quiz.description|linebreaksbr}}</p>
+    {% if quiz.description_image %}
     <img src="{{quiz.description_image.url}}">
+    {% endif %}
     <h1>정답</h1>
     <p>{{quiz.answer|linebreaksbr}}</p>
+    {% if quiz.answer_image %}
     <img src="{{quiz.answer_image.url}}">
+    {% endif %}
   </body>
 </html>

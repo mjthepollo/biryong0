@@ -13,7 +13,6 @@ User = get_user_model()
 class UserAdmin(auth_admin.UserAdmin):
     form = UserAdminChangeForm
     add_form = UserAdminCreationForm
-    readonly_fields = ("solved_point",)
     fieldsets = (
         (None, {"fields": ("username", "email", "password")}),
         ("LDN", {"fields":     ("kakao_id",

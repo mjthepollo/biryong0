@@ -1,7 +1,7 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from biryong.quiz.forms import SolveForm
 from biryong.quiz.models import Quiz
@@ -59,5 +59,9 @@ def detail(request, pk):
         if solve_form.is_valid():
             solve_form.save()
             quiz.solved = True
+            solver = solve_form.cleaned_data.get("solver")
+            solver.solved_point += quiz.point
+            solver.save()
+            print(solver, "SOVLE!!!!!!!!!")
             quiz.save()
-        return render(request, 'quiz_detail.html', context={"quiz": quiz, "solve_form": solve_form})
+        return redirect('quiz:list')
