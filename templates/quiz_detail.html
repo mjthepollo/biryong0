@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="{% static 'css/project.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/quiz_detail.css' %}" rel="stylesheet" />
+    <title>QUIZ DETAIL</title>
+  </head>
+  <body>
+    <h1>문제 {{quiz.name}}</h1>
+    <h2>{{quiz.genre}}</h1>
+    <h3>{{quiz.point}}</h1>
+    <p>{{quiz.description|linebreaksbr}}</p>
+    <img src="{{quiz.description_image.url}}">
+    <h1>정답</h1>
+    <p>{{quiz.answer|linebreaksbr}}</p>
+    <img src="{{quiz.answer_image.url}}">
+  </body>
+</html>

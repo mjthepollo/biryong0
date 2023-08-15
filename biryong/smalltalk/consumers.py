@@ -125,6 +125,46 @@ class ChatConsumer(WebsocketConsumer):
         self.send(text_data=json.dumps({"type": "talk", "talk": talk}))
 
 
+class QuizConsumer(WebsocketConsumer):
+    def connect(self):
+        self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
+        self.room_group_name = self.room_name
+        # Join room group
+        user = self.scope["user"]
+        if user.is_authenticated:
+            user.set_random_chat_name_color()
+        async_to_sync(self.channel_layer.group_add)(
+            self.room_group_name, self.channel_name
+        )
+        self.accept()
+
+    def disconnect(self, close_code):
+        # Leave room group
+        async_to_sync(self.channel_layer.group_discard)(
+            self.room_group_name, self.channel_name
+        )
+
+    # Receive message from WebSocket
+    def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        user = self.scope["user"]
+        data_type = text_data_json["type"]
+        if data_type == "message":
+            message = escape(text_data_json["content"])
+            talk = get_talk(user, message)
+            print(message)
+            async_to_sync(self.channel_layer.group_send)(
+                self.room_group_name, {"type": "chat_message", "talk": talk}
+            )
+        else:
+            raise Exception("Unknown data type.")
+
+    # Receive message from room group
+    def chat_message(self, event):
+        talk = event["talk"]
+        self.send(text_data=json.dumps({"type": "talk", "talk": talk}))
+
+
 class TwitchChatConsumer(WebsocketConsumer):
     def connect(self):
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]

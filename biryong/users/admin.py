@@ -13,13 +13,14 @@ User = get_user_model()
 class UserAdmin(auth_admin.UserAdmin):
     form = UserAdminChangeForm
     add_form = UserAdminCreationForm
+    readonly_fields = ("solved_point",)
     fieldsets = (
         (None, {"fields": ("username", "email", "password")}),
         ("LDN", {"fields":     ("kakao_id",
                                 "profile_image_url",
                                 "thumbnail_image_url",
                                 )}),
-        (_("Personal info"), {"fields": ("nickname",)}),
+        (_("Personal info"), {"fields": ("nickname", "join_quiz", "solved_point"), }),
         (
             _("Permissions"),
             {
@@ -34,7 +35,7 @@ class UserAdmin(auth_admin.UserAdmin):
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
-    list_display = ["username", "email", "nickname", "is_superuser"]
+    list_display = ["username", "email", "nickname", "join_quiz", "is_superuser"]
     search_fields = ["name"]
     ordering = ["id"]
     add_fieldsets = (

@@ -1,12 +1,48 @@
 {% extends "base_with_banner.html" %}
 {% load static %}
 {% block css %}
-<link href="{% static 'css/home.css' %}" rel="stylesheet" />
+<link href="{% static 'css/quiz.css' %}" rel="stylesheet" />
 {% endblock css%}
 {% block content %}
 <div class="main-content-container">
-    <h1 style="font-weight:bold; font-size:42px;">구현중입니다! 죄송 ㅎㅎ</h1>
+    <div class="top3_players">
+        {% for player in top3_players_info %}
+        <div class="top3_player">
+            <div class="rank">{{ forloop.counter }}등</div>
+            <img src="{{player.thumbnail_image_url}}">
+            <span class="player_name">{{ player.nickname }}</span>
+            <span class="player_score">{{ player.solved_point }}</span>
+        </div>
+        {% endfor %}
+    </div>
+    <div class='other_players'>
+        {% for player in other_players_info %}
+        <div class="other_player">
+            <img src="{{player.thumbnail_image_url}}">
+            <span class="player_name">{{ player.nickname }}</span>
+            <span class="player_score">{{ player.solved_point }}</span>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="quizs">
+        {% for quiz in quizs %}
+            {% if user.is_staff %}
+            <a class='quiz {% if quiz.pk in solved_quizs_pk %}solved{% endif %}' href="{% url 'quiz:detail' quiz.pk %}" data-pk="{{quiz.pk}}">
+                <div class="genre">{{quiz.genre}}</div>
+                <div class="name">{{quiz.name}}</div>
+                <div class="point">{{quiz.point}}</div>
+            </a>
+            {% else %}
+            <div class="quiz {% if quiz.pk in solved_quizs_pk %}solved{% endif %}" data-pk="{{quiz.pk}}">
+                <div class="genre">{{quiz.genre}}</div>
+                <div class="name">{{quiz.name}}</div>
+                <div class="point">{{quiz.point}}</div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 </div>
 {% endblock content %}
 {% block inline_javascript %}
+<script src="{% static 'js/quiz_list_info.js' %}"></script>
 {% endblock inline_javascript %}
